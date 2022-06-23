@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {lazy, Suspense} from 'react';
 import './App.scss';
+import {Link, Route, Routes} from 'react-router-dom';
+
+const Home = lazy(() => import('./Home/Home'));
+const About = lazy(() => import('./About/About'));
+const Contacts = lazy(() => import('./Contacts/Contacts'));
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <>
+            <nav>
+                <Link to="/">Home</Link>/
+                <Link to="/about">About</Link>/
+                <Link to="/contacts">Contacts</Link>
+            </nav>
+
+            <Routes>
+                <Route path="/" element={
+                    <Suspense>
+                        <Home />
+                    </Suspense>
+                } />
+                <Route path="about" element={
+                    <Suspense>
+                        <About />
+                    </Suspense>
+                } />
+                <Route path="contacts" element={
+                    <Suspense>
+                        <Contacts />
+                    </Suspense>
+                } />
+            </Routes>
+        </>
+    );
 }
 
 export default App;
