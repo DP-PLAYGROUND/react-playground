@@ -1,8 +1,7 @@
 import {FunctionComponent} from 'react';
 import TodoForm from './TodoForm/TodoForm';
-import {TodoDraft} from './TodoDraft';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
-import {selectTodos, todosActions} from './todosSlice';
+import {selectTodos, TodoDraft, todosActions} from './todosSlice';
 import TodoView from './TodoView/TodoView';
 
 const Todos: FunctionComponent = () => {
@@ -11,16 +10,15 @@ const Todos: FunctionComponent = () => {
     const todos = useAppSelector(selectTodos);
 
     const onCreate = (todo: TodoDraft) => {
-        dispatch(todosActions.add({
+        dispatch(todosActions.added({
             ...todo,
             id: new Date().getTime(),
-            createdAt: new Date().toISOString(),
-            completed: false
+            createdAt: new Date().toISOString()
         }));
     }
 
     const onRemove = (id: number) => {
-        dispatch(todosActions.remove(id))
+        dispatch(todosActions.removed(id))
     };
 
     return (

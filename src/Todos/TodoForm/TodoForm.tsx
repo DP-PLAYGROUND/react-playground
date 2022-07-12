@@ -1,5 +1,5 @@
 import {FormEventHandler, FunctionComponent, useState} from 'react';
-import {TodoDraft} from '../TodoDraft';
+import {TodoDraft} from '../todosSlice';
 
 interface TodoFormProps {
     readonly onSubmit?: (todo: TodoDraft) => void

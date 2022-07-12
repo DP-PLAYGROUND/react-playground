@@ -1,12 +1,14 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../app/reducer';
 
-export interface Todo {
-    readonly id: number;
+export interface TodoDraft {
     readonly title: string;
     readonly description: string;
+}
+
+export interface Todo extends TodoDraft {
+    readonly id: number;
     readonly createdAt: string;
-    readonly completed: boolean;
 }
 
 const initialState: readonly Todo[] = [];
@@ -15,10 +17,10 @@ const slice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        add: (state, action: PayloadAction<Todo>) => {
+        added: (state, action: PayloadAction<Todo>) => {
             state.push(action.payload)
         },
-        remove: (state, action: PayloadAction<Todo['id']>) => {
+        removed: (state, action: PayloadAction<Todo['id']>) => {
             return state.filter(todo => todo.id !== action.payload)
         }
     }
