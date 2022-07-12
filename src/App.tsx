@@ -6,6 +6,7 @@ const Home = lazy(() => import('./Home/Home'));
 const About = lazy(() => import('./About/About'));
 const Contacts = lazy(() => import('./Contacts/Contacts'));
 const Inputs = lazy(() => import('./Inputs/Inputs'));
+const Todos = lazy(() => import('./Todos/Todos'));
 
 function App() {
     return (
@@ -14,7 +15,8 @@ function App() {
                 <Link to="/">Home</Link>/
                 <Link to="/about">About</Link>/
                 <Link to="/contacts">Contacts</Link>/
-                <Link to="/inputs">Inputs</Link>
+                <Link to="/inputs">Inputs</Link>/
+                <Link to="/todos">Todos</Link>
             </nav>
 
             <Routes>
@@ -36,6 +38,11 @@ function App() {
                 <Route path="inputs" element={
                     <Suspense>
                         <Inputs />
+                    </Suspense>
+                } />
+                <Route path="todos" element={
+                    <Suspense>
+                        <Todos />
                     </Suspense>
                 } />
             </Routes>
