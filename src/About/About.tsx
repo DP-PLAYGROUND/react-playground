@@ -1,7 +1,7 @@
 import {FunctionComponent} from 'react';
 
 const About: FunctionComponent = () => {
-    return (<section>About</section>);
+    return (<section><h1>About</h1></section>);
 }
 
 export default About

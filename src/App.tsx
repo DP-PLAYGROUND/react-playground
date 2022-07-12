@@ -5,6 +5,7 @@ import {Link, Route, Routes} from 'react-router-dom';
 const Home = lazy(() => import('./Home/Home'));
 const About = lazy(() => import('./About/About'));
 const Contacts = lazy(() => import('./Contacts/Contacts'));
+const Inputs = lazy(() => import('./Inputs/Inputs'));
 
 function App() {
     return (
@@ -12,7 +13,8 @@ function App() {
             <nav>
                 <Link to="/">Home</Link>/
                 <Link to="/about">About</Link>/
-                <Link to="/contacts">Contacts</Link>
+                <Link to="/contacts">Contacts</Link>/
+                <Link to="/inputs">Inputs</Link>
             </nav>
 
             <Routes>
@@ -29,6 +31,11 @@ function App() {
                 <Route path="contacts" element={
                     <Suspense>
                         <Contacts />
+                    </Suspense>
+                } />
+                <Route path="inputs" element={
+                    <Suspense>
+                        <Inputs />
                     </Suspense>
                 } />
             </Routes>
