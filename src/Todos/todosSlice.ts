@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {RootState} from '../app/reducer';
 
-interface Todo {
+export interface Todo {
     readonly id: number | string;
     readonly title: string;
     readonly description: string;
