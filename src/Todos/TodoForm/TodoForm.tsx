@@ -1,13 +1,13 @@
 import {FormEventHandler, FunctionComponent, useState} from 'react';
-import {Todo} from '../todosSlice';
+import {TodoDraft} from '../TodoDraft';
 
 interface TodoFormProps {
-    readonly onSubmit?: (todo: Pick<Todo, 'title' | 'description'>) => void
+    readonly onSubmit?: (todo: TodoDraft) => void
 }
 
 const TodoForm: FunctionComponent<TodoFormProps> = ({onSubmit}) => {
-    const [title, setTitle] = useState<Todo['title']>('');
-    const [description, setDescription] = useState<Todo['description']>('');
+    const [title, setTitle] = useState<TodoDraft['title']>('');
+    const [description, setDescription] = useState<TodoDraft['description']>('');
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
         event.preventDefault();

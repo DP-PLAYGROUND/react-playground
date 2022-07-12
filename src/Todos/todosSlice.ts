@@ -1,8 +1,8 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../app/reducer';
 
 export interface Todo {
-    readonly id: number | string;
+    readonly id: number;
     readonly title: string;
     readonly description: string;
     readonly createdAt: string;
@@ -15,9 +15,8 @@ const slice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        add: (state, action) => {
-            console.log(state);
-            console.log(action);
+        add: (state, action: PayloadAction<Todo>) => {
+            state.push(action.payload)
         }
     }
 });
