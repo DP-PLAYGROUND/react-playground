@@ -9,6 +9,7 @@ export interface TodoDraft {
 export interface Todo extends TodoDraft {
     readonly id: number;
     readonly createdAt: string;
+    readonly editedAt?: string;
 }
 
 const initialState: readonly Todo[] = [];
@@ -17,11 +18,20 @@ const slice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        added: (state, action: PayloadAction<Todo>) => {
-            state.push(action.payload)
+        create: (state, action: PayloadAction<TodoDraft>) => {
+            return state.concat({
+                ...action.payload,
+                id: new Date().getTime(),
+                createdAt: new Date().toISOString()
+            });
         },
-        removed: (state, action: PayloadAction<Todo['id']>) => {
-            return state.filter(todo => todo.id !== action.payload)
+        remove: (state, action: PayloadAction<Todo['id']>) => {
+            return state.filter(todo => todo.id !== action.payload);
+        },
+        edit: (state, action: PayloadAction<{id: Todo['id'], todo: Partial<TodoDraft>}>) => {
+            return state.map(todo => todo.id === action.payload.id ?
+                { ...todo, ...action.payload.todo, editedAt: new Date().toISOString() } :
+                todo);
         }
     }
 });

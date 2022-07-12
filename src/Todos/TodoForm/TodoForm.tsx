@@ -1,50 +1,50 @@
-import {FormEventHandler, FunctionComponent, useState} from 'react';
+import {FormEventHandler, FunctionComponent, useReducer} from 'react';
 import {TodoDraft} from '../todosSlice';
 
 interface TodoFormProps {
-    readonly onSubmit?: (todo: TodoDraft) => void
+    readonly initialState?: TodoDraft;
+    readonly onSubmit?: (todo: TodoDraft) => void;
 }
 
-const TodoForm: FunctionComponent<TodoFormProps> = ({onSubmit}) => {
-    const [title, setTitle] = useState<TodoDraft['title']>('');
-    const [description, setDescription] = useState<TodoDraft['description']>('');
+const TodoForm: FunctionComponent<TodoFormProps> =
+    ({
+         onSubmit,
+         initialState = { title: '', description: ''}
+     }) => {
+        const [state, dispatch] = useReducer(
+            (state: typeof initialState, action: Partial<typeof initialState>) => ({...state, ...action}),
+            initialState
+        );
 
-    const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
-        event.preventDefault();
+        const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
+            event.preventDefault();
 
-        onSubmit?.({
-            title,
-            description
-        });
+            onSubmit?.(state);
+        }
+
+        return (
+            <form onSubmit={handleSubmit}
+                  onReset={() => dispatch(initialState)}>
+                <div>
+                    <input required
+                           placeholder={'Title'}
+                           value={state.title}
+                           onChange={event => dispatch({title: event.target.value})}/>
+                </div>
+
+                <div>
+                <textarea required
+                          placeholder={'Description'}
+                          value={state.description}
+                          onChange={event => dispatch({description: event.target.value})}/>
+                </div>
+
+                <div>
+                    <button type={'reset'}>Reset</button>
+                    <button type={'submit'}>Submit</button>
+                </div>
+            </form>
+        );
     }
-
-    const handleReset: FormEventHandler<HTMLFormElement> = () => {
-        setTitle('');
-        setDescription('');
-    }
-
-    return (
-        <form onSubmit={handleSubmit} onReset={handleReset}>
-            <section>
-                <label htmlFor="title">Title</label><br/>
-                <input type="text" id="title" required
-                       value={title}
-                       onChange={event => setTitle(event.target.value)}/>
-            </section>
-
-            <section>
-                <label htmlFor="description">Description</label><br/>
-                <textarea id="description" required
-                          value={description}
-                          onChange={event => setDescription(event.target.value)}/>
-            </section>
-
-            <section>
-                <button type={'reset'}>Reset</button>
-                <button type={'submit'}>Submit</button>
-            </section>
-        </form>
-    );
-}
 
 export default TodoForm
