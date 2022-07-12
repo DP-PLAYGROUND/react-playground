@@ -1,15 +1,20 @@
-import {FunctionComponent} from 'react';
+import {FunctionComponent, useState} from 'react';
 import TodoForm from './TodoForm/TodoForm';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {selectTodos, TodoDraft, todosActions} from './todosSlice';
 import TodoView from './TodoView/TodoView';
+import Modal from '../shared/Modal/Modal';
 
 const Todos: FunctionComponent = () => {
     const dispatch = useAppDispatch();
 
     const todos = useAppSelector(selectTodos);
 
+    const [todoCreationVisible, setTodoCreationVisible] = useState(false);
+
     const onCreate = (todo: TodoDraft) => {
+        setTodoCreationVisible(false);
+
         dispatch(todosActions.added({
             ...todo,
             id: new Date().getTime(),
@@ -25,9 +30,11 @@ const Todos: FunctionComponent = () => {
         <>
             <h1>Todos</h1>
 
-            <section>
+            <button onClick={() => setTodoCreationVisible(true)}>Create</button>
+
+            {todoCreationVisible && <Modal onBackdropClick={() => setTodoCreationVisible(false)}>
                 <TodoForm onSubmit={onCreate}></TodoForm>
-            </section>
+            </Modal>}
 
             <section>
                 {todos.map(todo => (
