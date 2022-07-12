@@ -19,6 +19,10 @@ const Todos: FunctionComponent = () => {
         }));
     }
 
+    const onRemove = (id: number) => {
+        dispatch(todosActions.remove(id))
+    };
+
     return (
         <>
             <h1>Todos</h1>
@@ -29,7 +33,10 @@ const Todos: FunctionComponent = () => {
 
             <section>
                 {todos.map(todo => (
-                    <TodoView {...todo} key={todo.id}/>
+                    <section key={todo.id}>
+                        <TodoView {...todo}/>
+                        <button onClick={() => onRemove(todo.id)}>Remove</button>
+                    </section>
                 ))}
             </section>
         </>

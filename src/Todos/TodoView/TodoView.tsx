@@ -6,9 +6,9 @@ type TodoViewProps = Todo;
 const TodoView: FunctionComponent<TodoViewProps> = ({title, description, createdAt}) => {
     return (
         <section>
-            <h2>{title}</h2>
-            <h1>{description}</h1>
-            <span>{createdAt}</span>
+            <h2>Title: {title}</h2>
+            <h1>Description: {description}</h1>
+            <span>Created at: {createdAt}</span>
         </section>
     );
 }
