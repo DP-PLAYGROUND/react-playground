@@ -16,8 +16,6 @@ const TodoForm: FunctionComponent<TodoFormProps> = ({onSubmit}) => {
             title,
             description
         });
-
-        event.currentTarget.reset();
     }
 
     const handleReset: FormEventHandler<HTMLFormElement> = () => {
