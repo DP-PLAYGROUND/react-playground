@@ -10,6 +10,7 @@ export interface Todo extends TodoDraft {
     readonly id: number;
     readonly createdAt: string;
     readonly editedAt?: string;
+    readonly completed?: boolean;
 }
 
 const initialState: readonly Todo[] = [];
@@ -31,6 +32,11 @@ const slice = createSlice({
         edit: (state, action: PayloadAction<{id: Todo['id'], todo: Partial<TodoDraft>}>) => {
             return state.map(todo => todo.id === action.payload.id ?
                 { ...todo, ...action.payload.todo, editedAt: new Date().toISOString() } :
+                todo);
+        },
+        toggleCompletion: (state, action: PayloadAction<Todo['id']>) => {
+            return state.map(todo => todo.id === action.payload ?
+                { ...todo, completed: !todo.completed } :
                 todo);
         }
     }

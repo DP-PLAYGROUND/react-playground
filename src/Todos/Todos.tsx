@@ -20,7 +20,7 @@ const Todos: FunctionComponent = () => {
         appDispatch(todosActions.create(todo));
     }
 
-    const onRemove = (id: number) => {
+    const onRemove = (id:  Todo['id']) => {
         appDispatch(todosActions.remove(id))
     };
 
@@ -29,6 +29,10 @@ const Todos: FunctionComponent = () => {
 
         appDispatch(todosActions.edit({id, todo}))
     }
+
+    const onToggleCompletion = (id:  Todo['id']) => {
+        appDispatch(todosActions.toggleCompletion(id))
+    };
 
     return (
         <>
@@ -40,7 +44,7 @@ const Todos: FunctionComponent = () => {
                 <TodoForm onSubmit={onCreate}></TodoForm>
             </Modal>}
 
-            {editableTodo && <Modal onBackdropClick={() => setCreation(false)}>
+            {editableTodo && <Modal onBackdropClick={() => setEditableTodo(null)}>
                 <TodoForm initialState={editableTodo}
                           onSubmit={event => onEdit(editableTodo?.id, event)}></TodoForm>
             </Modal>}
@@ -51,6 +55,9 @@ const Todos: FunctionComponent = () => {
                         <TodoView {...todo}/>
                         <button onClick={() => onRemove(todo.id)}>Remove</button>
                         <button onClick={() => setEditableTodo(todo)}>Edit</button>
+                        <button onClick={() => onToggleCompletion(todo.id)}>
+                            {todo.completed ? 'Mark as uncompleted' : 'Mark as completed'}
+                        </button>
                     </section>
                 ))}
             </section>
