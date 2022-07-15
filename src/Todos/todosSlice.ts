@@ -1,47 +1,40 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {RootState} from '../app/reducer';
+import {createAsyncThunk, createEntityAdapter, createSlice} from '@reduxjs/toolkit';
+import {Todo, TodoDraft} from '../api/Todos/Todo';
+import {TodosApi} from '../api/Todos/TodosAPI';
 
-export interface TodoDraft {
-    readonly title: string;
-    readonly description: string;
+interface State {
+    readonly status: 'idle' | 'loading';
 }
 
-export interface Todo extends TodoDraft {
-    readonly id: number;
-    readonly createdAt: string;
-    readonly editedAt?: string;
-    readonly completed?: boolean;
-}
+const todosAdapter = createEntityAdapter<Todo>({
+    selectId: todo => todo.id
+});
 
-const initialState: readonly Todo[] = [];
+const initialState = todosAdapter.getInitialState<State>({
+    status: 'idle'
+});
+
+
+export const loadTodos = createAsyncThunk('todos/load', () => {
+    return TodosApi.getAll();
+});
+
+export const createTodo = createAsyncThunk('todos/create', (todo: TodoDraft) => {
+    return TodosApi.create(todo);
+});
+
+export const updateTodo = createAsyncThunk('todos/update', ({id, todo}: {id: Todo['id'], todo: TodoDraft}) => {
+    return TodosApi.update(id, todo);
+});
+
+export const removeTodo = createAsyncThunk('todos/remove', (id: Todo['id']) => {
+    return TodosApi.remove(id);
+});
 
 const slice = createSlice({
     name: 'todos',
     initialState,
-    reducers: {
-        create: (state, action: PayloadAction<TodoDraft>) => {
-            return state.concat({
-                ...action.payload,
-                id: new Date().getTime(),
-                createdAt: new Date().toISOString()
-            });
-        },
-        remove: (state, action: PayloadAction<Todo['id']>) => {
-            return state.filter(todo => todo.id !== action.payload);
-        },
-        edit: (state, action: PayloadAction<{id: Todo['id'], todo: Partial<TodoDraft>}>) => {
-            return state.map(todo => todo.id === action.payload.id ?
-                { ...todo, ...action.payload.todo, editedAt: new Date().toISOString() } :
-                todo);
-        },
-        toggleCompletion: (state, action: PayloadAction<Todo['id']>) => {
-            return state.map(todo => todo.id === action.payload ?
-                { ...todo, completed: !todo.completed } :
-                todo);
-        }
-    }
+    reducers: {},
 });
 
 export const { reducer: todosReducer, actions: todosActions } = slice;
-
-export const selectTodos = (state: RootState) => state.todos;
