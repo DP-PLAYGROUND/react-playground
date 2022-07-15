@@ -36,8 +36,6 @@ const Todos: FunctionComponent = () => {
 
     return (
         <>
-            <h1>Todos</h1>
-
             <button onClick={() => setCreation(true)}>Create</button>
 
             {creation && <Modal onBackdropClick={() => setCreation(false)}>

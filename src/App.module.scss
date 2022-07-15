@@ -1,0 +1,19 @@
+.header {
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    .link {
+      color: #000000;
+
+      &.active {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.main {
+  margin: 10px;
+}

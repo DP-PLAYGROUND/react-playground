@@ -1,6 +1,6 @@
 import React, {lazy, Suspense} from 'react';
-import './App.scss';
-import {Link, Route, Routes} from 'react-router-dom';
+import styles from './App.module.scss';
+import {NavLink, Route, Routes} from 'react-router-dom';
 
 const Home = lazy(() => import('./Home/Home'));
 const Todos = lazy(() => import('./Todos/Todos'));
@@ -8,14 +8,18 @@ const Todos = lazy(() => import('./Todos/Todos'));
 function App() {
     return (
         <>
-            <header>
-                <nav>
-                    <Link to="/">Home</Link>/
-                    <Link to="/todos">Todos</Link>
+            <header className={styles.header}>
+                <nav className={styles.nav}>
+                    <NavLink to="/" className={
+                        ({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link
+                    }>Home</NavLink>
+                    <NavLink to="/todos" className={
+                        ({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link
+                    }>Todos</NavLink>
                 </nav>
             </header>
 
-            <main>
+            <main className={styles.main}>
                 <Routes>
                     <Route path="/" element={
                         <Suspense>

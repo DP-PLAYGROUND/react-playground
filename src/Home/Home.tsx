@@ -2,7 +2,7 @@ import {FunctionComponent} from 'react';
 
 const Home: FunctionComponent = () => {
     return (<section>
-        <h1>Home</h1>
+        <h1>Playground for React experiments</h1>
     </section>);
 }
 
