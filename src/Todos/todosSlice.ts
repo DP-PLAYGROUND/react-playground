@@ -1,6 +1,7 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from '@reduxjs/toolkit';
 import {Todo, TodoDraft} from '../api/Todos/Todo';
 import {TodosApi} from '../api/Todos/TodosAPI';
+import {RootState} from '../app/reducer';
 
 const todosAdapter = createEntityAdapter<Todo>({
     selectId: todo => todo.id
@@ -16,8 +17,8 @@ export const createTodo = createAsyncThunk('todos/create', (todo: TodoDraft) => 
     return TodosApi.create(todo);
 });
 
-export const updateTodo = createAsyncThunk('todos/update', (params: Parameters<typeof TodosApi.update>) => {
-    return TodosApi.update(...params);
+export const updateTodo = createAsyncThunk('todos/update', ({id, fields}: {id: Todo['id'], fields: Partial<TodoDraft>}) => {
+    return TodosApi.update(id, fields);
 });
 
 export const removeTodo = createAsyncThunk('todos/remove', (id: Todo['id']) => {
@@ -36,3 +37,9 @@ const slice = createSlice({
 });
 
 export const { reducer: todosReducer, actions: todosActions } = slice;
+
+const todosSelectors = todosAdapter.getSelectors<RootState>(state => state.todos);
+
+export const {
+    selectAll: selectAllTodos,
+} = todosSelectors;
