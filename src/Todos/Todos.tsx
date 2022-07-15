@@ -3,7 +3,7 @@ import TodoForm from './TodoForm/TodoForm';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {selectTodos, Todo, TodoDraft, todosActions} from './todosSlice';
 import TodoView from './TodoView/TodoView';
-import Modal from '../shared/Modal/Modal';
+import Modal from '../components/Modal/Modal';
 
 const Todos: FunctionComponent = () => {
     const appDispatch = useAppDispatch();
