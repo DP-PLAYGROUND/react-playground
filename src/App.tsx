@@ -19,7 +19,7 @@ function App() {
                 </nav>
             </header>
 
-            <main className={styles.main}>
+            <main>
                 <Routes>
                     <Route path="/" element={
                         <Suspense>

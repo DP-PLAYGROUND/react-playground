@@ -16,11 +16,15 @@ const Todos: FunctionComponent = () => {
     }, [appDispatch]);
 
     return (
-        <section className={styles.todos}>
-            <p>Total: {todosTotal}</p>
+        <>
+            <header className={styles.header}>
+                <p>Total: {todosTotal}</p>
+            </header>
 
-            <TodosList todos={todos}/>
-        </section>
+            <section className={styles.todos}>
+                <TodosList todos={todos}/>
+            </section>
+        </>
     )
 }
 
