@@ -1,24 +1,20 @@
-import {FunctionComponent, useEffect} from 'react';
+import {FunctionComponent} from 'react';
 import styles from './Todos.module.scss'
 import {TodosList} from './TodosList/TodosList';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
-import {loadTodos, selectAllTodos, selectTotalTodos} from './todosSlice';
+import {selectAllTodos, todosActions} from './todosSlice';
 
 const Todos: FunctionComponent = () => {
+    const appDispatcher = useAppDispatch();
+
     const todos = useAppSelector(selectAllTodos);
 
-    const todosTotal = useAppSelector(selectTotalTodos);
-
-    const appDispatch = useAppDispatch();
-
-    useEffect(() => {
-        appDispatch(loadTodos())
-    }, [appDispatch]);
+    const onCreate = () => appDispatcher(todosActions.create({title: '', completed: false}))
 
     return (
         <>
             <header className={styles.header}>
-                <p>Total: {todosTotal}</p>
+                <button onClick={onCreate}>Create</button>
             </header>
 
             <section className={styles.todos}>
