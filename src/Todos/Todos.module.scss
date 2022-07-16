@@ -3,6 +3,10 @@
   position: sticky;
   top: 0;
   background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: start;
 }
 
 .todos {

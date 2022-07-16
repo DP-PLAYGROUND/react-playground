@@ -17,8 +17,9 @@ export const TodoView: FunctionComponent<PropsWithChildren<TodoViewProps>> =
                 <input type="checkbox"
                        checked={completed}
                        onChange={event => onChange?.({ completed: event.target.checked})}/>
-                <textarea value={title}
-                          onChange={event => onChange?.({title: event.target.value})}/>
+                <input type="text"
+                       value={title}
+                       onChange={event => onChange?.({title: event.target.value})}/>
                 <div>{children}</div>
             </section>
         )

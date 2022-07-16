@@ -3,6 +3,7 @@ import styles from './Todos.module.scss'
 import {TodosList} from './TodosList/TodosList';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {selectAllTodos, todosActions} from './todosSlice';
+import {TodosFilter} from './TodosFilter/TodosFilter';
 
 const Todos: FunctionComponent = () => {
     const appDispatcher = useAppDispatch();
@@ -14,6 +15,7 @@ const Todos: FunctionComponent = () => {
     return (
         <>
             <header className={styles.header}>
+                <TodosFilter/>
                 <button onClick={onCreate}>Create</button>
             </header>
 
