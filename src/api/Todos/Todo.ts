@@ -6,3 +6,8 @@ export interface TodoDraft {
 export interface Todo extends TodoDraft {
     readonly id: number;
 }
+
+export interface TodoUpdateParams {
+    readonly id: Todo['id'],
+    readonly changes: Partial<TodoDraft>
+}

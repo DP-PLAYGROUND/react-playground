@@ -1,4 +1,4 @@
-import {Todo, TodoDraft} from './Todo';
+import {Todo, TodoDraft, TodoUpdateParams} from './Todo';
 import {JSONPlaceholderProvider} from '../JSONPlaceholderProvider';
 
 const provider = JSONPlaceholderProvider;
@@ -13,8 +13,8 @@ const create = (todo: TodoDraft) => {
     return provider.post<Todo>(path, todo).then(res => res.data);
 }
 
-const update = (id: Todo['id'], fields: Partial<TodoDraft>) => {
-    return provider.patch<Todo>(`${path}/${id}`, fields).then(res => res.data);
+const update = ({ id, changes}: TodoUpdateParams) => {
+    return provider.patch<Todo>(`${path}/${id}`, changes).then(res => res.data);
 }
 
 const remove = (id: Todo['id']) => {
