@@ -1,8 +1,9 @@
 import {FunctionComponent} from 'react';
+import styles from './Todos.module.scss'
 
 const Todos: FunctionComponent = () => {
     return (
-        <section></section>
+        <section className={styles.todos}></section>
     )
 }
 
