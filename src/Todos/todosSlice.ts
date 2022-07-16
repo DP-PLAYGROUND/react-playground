@@ -42,4 +42,5 @@ const todosSelectors = todosAdapter.getSelectors<RootState>(state => state.todos
 
 export const {
     selectAll: selectAllTodos,
+    selectTotal: selectTotalTodos
 } = todosSelectors;
