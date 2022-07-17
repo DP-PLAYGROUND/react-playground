@@ -10,7 +10,8 @@ export class SortTodosFilterStrategy implements TodosFilterStrategy {
             case TodosFilterSortType.name:
                 return [...todos].sort((a, b) => a.title.localeCompare(b.title));
             case TodosFilterSortType.newest:
-                return [...todos].sort((a, b) => b.id - a.id);
+                return [...todos].sort((a, b) =>
+                    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
         }
 
         return todos;

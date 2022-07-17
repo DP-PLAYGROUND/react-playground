@@ -10,8 +10,14 @@ const todosAdapter = createEntityAdapter<Todo>({
 
 const initialState = todosAdapter.getInitialState();
 
-export const createTodo = createAsyncThunk(`todos/create`, (todo: TodoDraft) =>
-    ({ ...todo, id: new Date().getTime() }));
+export const createTodo = createAsyncThunk<Todo, TodoDraft>(`todos/create`, todo => {
+    const date = new Date();
+
+    const id = date.getTime() + Math.round(performance.now());
+    const createdAt = date.toISOString();
+
+    return {...todo, id, createdAt}
+});
 
 const slice = createSlice({
     name: 'todos',

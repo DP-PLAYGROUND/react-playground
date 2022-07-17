@@ -14,12 +14,15 @@ export const TodosList: FunctionComponent<TodosListProps> = ({todos}) => {
 
     return (
         <section className={styles.list}>
-            {todos.map(({id, title, completed}) => (
+            {todos.map(({id, title, completed, createdAt}) => (
                 <TodoView key={id}
                           title={title}
                           completed={completed}
                           onChange={changes => appDispatcher(todosActions.updated({id, changes}))}>
-                    <button onClick={() => appDispatcher(todosActions.removed(id))}>Remove</button>
+                    <div className={styles.todoContent}>
+                        <div>Created at: {createdAt}</div>
+                        <button onClick={() => appDispatcher(todosActions.removed(id))}>Remove</button>
+                    </div>
                 </TodoView>
             ))}
         </section>
