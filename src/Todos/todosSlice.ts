@@ -3,15 +3,8 @@ import {RootState} from '../app/reducer';
 import {TodosFilterParams} from './TodosFilter/TodosFilterParams';
 import {TodosFilterStatusType} from './TodosFilter/TodosFilterStatusType';
 import {TodosFilterSortType} from './TodosFilter/TodosFilterSortType';
-
-export interface TodoDraft {
-    readonly title: string;
-    readonly completed: boolean;
-}
-
-export interface Todo extends TodoDraft {
-    readonly id: number;
-}
+import {Todo} from './Todo';
+import {TodoDraft} from './TodoDraft';
 
 const todosAdapter = createEntityAdapter<Todo>({
     selectId: todo => todo.id,
@@ -24,13 +17,13 @@ const slice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        create: (state, action: PayloadAction<TodoDraft>) => {
+        created: (state, action: PayloadAction<TodoDraft>) => {
             todosAdapter.addOne(state, {...action.payload, id: new Date().getTime()})
         },
-        update: (state, action: PayloadAction<Readonly<{id: Todo['id'], changes: Partial<TodoDraft>}>>) => {
+        updated: (state, action: PayloadAction<Readonly<{id: Todo['id'], changes: Partial<TodoDraft>}>>) => {
             todosAdapter.updateOne(state, action)
         },
-        remove: (state, action: PayloadAction<Todo['id']>) => {
+        removed: (state, action: PayloadAction<Todo['id']>) => {
             todosAdapter.removeOne(state, action)
         }
     }

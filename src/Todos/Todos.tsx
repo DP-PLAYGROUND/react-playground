@@ -11,7 +11,7 @@ import {TodosFilterStatusType} from './TodosFilter/TodosFilterStatusType';
 const Todos: FunctionComponent = () => {
     const appDispatcher = useAppDispatch();
 
-    const onCreate = () => appDispatcher(todosActions.create({title: '', completed: false}));
+    const onCreate = () => appDispatcher(todosActions.created({title: '', completed: false}));
 
     const [todosFilterParams, dispatchTodosFilterParams] = useReducer(
         (state: TodosFilterParams, action: Partial<TodosFilterParams>) => ({...state, ...action}),
