@@ -1,8 +1,8 @@
 import {ChangeEventHandler, FunctionComponent} from 'react';
 import styles from './TodosFilter.module.scss';
-import {TodosFilterParams} from './TodosFilterParams';
-import {isTodosFilterSortType, todosFilterSortTypes} from './TodosFilterSortType';
-import {isTodosFilterStatusType, todosFilterStatusTypes} from './TodosFilterStatusType';
+import {TodosFilterParams} from '../TodosFilterParams';
+import {isTodosFilterSortType, todosFilterSortTypes} from '../todos-filter-params/TodosFilterSortType';
+import {isTodosFilterStatusType, todosFilterStatusTypes} from '../todos-filter-params/TodosFilterStatusType';
 
 export interface TodosFilterProps extends TodosFilterParams {
     readonly onChange?: (changes: Partial<TodosFilterParams>) => void

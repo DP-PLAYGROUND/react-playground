@@ -1,10 +1,9 @@
 import {createEntityAdapter, createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../app/reducer';
-import {TodosFilterParams} from './TodosFilter/TodosFilterParams';
-import {TodosFilterStatusType} from './TodosFilter/TodosFilterStatusType';
-import {TodosFilterSortType} from './TodosFilter/TodosFilterSortType';
+import {TodosFilterParams} from './TodosFilterParams';
 import {Todo} from './Todo';
 import {TodoDraft} from './TodoDraft';
+import {todosFilterStrategyFactory} from './todosFilterStrategyFactory';
 
 const todosAdapter = createEntityAdapter<Todo>({
     selectId: todo => todo.id,
@@ -43,7 +42,8 @@ export const selectFilteredTodos = createSelector(
         (_state: RootState, filterParams: TodosFilterParams) => filterParams
     ],
     (todos, filterParams) => {
-        const filteredTodos = todos
+        return todosFilterStrategyFactory(filterParams).execute(todos);
+        /*const filteredTodos = todos
             .filter(todo => todo.title.includes(filterParams.query))
             .filter(todo => {
                 switch (filterParams.status) {
@@ -58,6 +58,6 @@ export const selectFilteredTodos = createSelector(
 
         return filterParams.sort === TodosFilterSortType.name ?
             filteredTodos.sort((a, b) => a.title.localeCompare(b.title)) :
-            filteredTodos;
+            filteredTodos;*/
     }
 );

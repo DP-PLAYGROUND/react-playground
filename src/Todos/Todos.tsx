@@ -4,9 +4,9 @@ import {TodosList} from './TodosList/TodosList';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {selectFilteredTodos, todosActions} from './todosSlice';
 import {TodosFilter} from './TodosFilter/TodosFilter';
-import {TodosFilterParams} from './TodosFilter/TodosFilterParams';
-import {TodosFilterSortType} from './TodosFilter/TodosFilterSortType';
-import {TodosFilterStatusType} from './TodosFilter/TodosFilterStatusType';
+import {TodosFilterParams} from './TodosFilterParams';
+import {TodosFilterSortType} from './todos-filter-params/TodosFilterSortType';
+import {TodosFilterStatusType} from './todos-filter-params/TodosFilterStatusType';
 
 const Todos: FunctionComponent = () => {
     const appDispatcher = useAppDispatch();
