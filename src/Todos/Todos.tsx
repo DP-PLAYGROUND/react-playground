@@ -2,7 +2,7 @@ import {FunctionComponent, useMemo, useReducer} from 'react';
 import styles from './Todos.module.scss'
 import {TodosList} from './TodosList/TodosList';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
-import {selectFilteredTodos, todosActions} from './todosSlice';
+import {createTodo, selectFilteredTodos} from './todosSlice';
 import {TodosFilter} from './TodosFilter/TodosFilter';
 import {TodosFilterParams} from './TodosFilterParams';
 import {TodosFilterSortType} from './todos-filter-params/TodosFilterSortType';
@@ -21,7 +21,7 @@ const Todos: FunctionComponent = () => {
 
     const todos = useAppSelector(state => selectFilteredTodos(state, todosFilterStrategy));
 
-    const onCreate = () => appDispatcher(todosActions.created({title: '', completed: false}));
+    const onCreate = () => appDispatcher(createTodo({title: '', completed: false}));
 
     return (
         <>

@@ -1,4 +1,4 @@
-import {createEntityAdapter, createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAsyncThunk, createEntityAdapter, createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../app/reducer';
 import {Todo} from './Todo';
 import {TodoDraft} from './TodoDraft';
@@ -10,20 +10,22 @@ const todosAdapter = createEntityAdapter<Todo>({
 
 const initialState = todosAdapter.getInitialState();
 
+export const createTodo = createAsyncThunk(`todos/create`, (todo: TodoDraft) =>
+    ({ ...todo, id: new Date().getTime() }));
+
 const slice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        created: (state, action: PayloadAction<TodoDraft>) => {
-            todosAdapter.addOne(state, {...action.payload, id: new Date().getTime()})
-        },
         updated: (state, action: PayloadAction<Readonly<{id: Todo['id'], changes: Partial<TodoDraft>}>>) => {
             todosAdapter.updateOne(state, action)
         },
         removed: (state, action: PayloadAction<Todo['id']>) => {
             todosAdapter.removeOne(state, action)
         }
-    }
+    },
+    extraReducers: builder => builder
+        .addCase(createTodo.fulfilled, todosAdapter.addOne)
 });
 
 export const { reducer: todosReducer, actions: todosActions } = slice;
