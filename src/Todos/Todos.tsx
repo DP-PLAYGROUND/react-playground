@@ -1,4 +1,4 @@
-import {FunctionComponent, useReducer} from 'react';
+import {FunctionComponent, useMemo, useReducer} from 'react';
 import styles from './Todos.module.scss'
 import {TodosList} from './TodosList/TodosList';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
@@ -7,18 +7,21 @@ import {TodosFilter} from './TodosFilter/TodosFilter';
 import {TodosFilterParams} from './TodosFilterParams';
 import {TodosFilterSortType} from './todos-filter-params/TodosFilterSortType';
 import {TodosFilterStatusType} from './todos-filter-params/TodosFilterStatusType';
+import {todosFilterStrategyFactory} from './todosFilterStrategyFactory';
 
 const Todos: FunctionComponent = () => {
     const appDispatcher = useAppDispatch();
 
-    const onCreate = () => appDispatcher(todosActions.created({title: '', completed: false}));
-
     const [todosFilterParams, dispatchTodosFilterParams] = useReducer(
         (state: TodosFilterParams, action: Partial<TodosFilterParams>) => ({...state, ...action}),
         {query: '', status: TodosFilterStatusType.all, sort: TodosFilterSortType.newest}
-    )
+    );
 
-    const todos = useAppSelector(state => selectFilteredTodos(state, todosFilterParams));
+    const todosFilterStrategy = useMemo(() => todosFilterStrategyFactory(todosFilterParams), [todosFilterParams]);
+
+    const todos = useAppSelector(state => selectFilteredTodos(state, todosFilterStrategy));
+
+    const onCreate = () => appDispatcher(todosActions.created({title: '', completed: false}));
 
     return (
         <>

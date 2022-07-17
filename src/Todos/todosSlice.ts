@@ -1,13 +1,11 @@
 import {createEntityAdapter, createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../app/reducer';
-import {TodosFilterParams} from './TodosFilterParams';
 import {Todo} from './Todo';
 import {TodoDraft} from './TodoDraft';
-import {todosFilterStrategyFactory} from './todosFilterStrategyFactory';
+import {TodosFilterStrategy} from './TodosFilterStrategy';
 
 const todosAdapter = createEntityAdapter<Todo>({
-    selectId: todo => todo.id,
-    sortComparer: (a, b) => b.id - a.id
+    selectId: todo => todo.id
 });
 
 const initialState = todosAdapter.getInitialState();
@@ -39,25 +37,7 @@ export const {
 export const selectFilteredTodos = createSelector(
     [
         selectAllTodos,
-        (_state: RootState, filterParams: TodosFilterParams) => filterParams
+        (_state: RootState, filterStrategy: TodosFilterStrategy) => filterStrategy
     ],
-    (todos, filterParams) => {
-        return todosFilterStrategyFactory(filterParams).execute(todos);
-        /*const filteredTodos = todos
-            .filter(todo => todo.title.includes(filterParams.query))
-            .filter(todo => {
-                switch (filterParams.status) {
-                    case TodosFilterStatusType.active:
-                        return !todo.completed;
-                    case TodosFilterStatusType.completed:
-                        return todo.completed
-                }
-
-                return true
-            });
-
-        return filterParams.sort === TodosFilterSortType.name ?
-            filteredTodos.sort((a, b) => a.title.localeCompare(b.title)) :
-            filteredTodos;*/
-    }
+    (todos, filterStrategy) => filterStrategy.execute(todos)
 );
