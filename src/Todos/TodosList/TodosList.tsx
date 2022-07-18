@@ -1,7 +1,7 @@
 import {FunctionComponent} from 'react';
 import {TodoView} from './TodoView/TodoView';
 import styles from './TodosList.module.scss'
-import {todosActions} from '../todosSlice';
+import {removeTodo, updateTodo} from '../todosSlice';
 import {useAppDispatch} from '../../app/hooks';
 import {Todo} from '../Todo';
 import {DateFormat} from '../../components/DateFormat/DateFormat';
@@ -19,10 +19,10 @@ export const TodosList: FunctionComponent<TodosListProps> = ({todos}) => {
                 <TodoView key={id}
                           title={title}
                           completed={completed}
-                          onChange={changes => appDispatcher(todosActions.updated({id, changes}))}>
+                          onChange={changes => appDispatcher(updateTodo({id, changes}))}>
                     <div className={styles.todoContent}>
                         <div><DateFormat value={createdAt} format={'ff'}/></div>
-                        <button onClick={() => appDispatcher(todosActions.removed(id))}>Remove</button>
+                        <button onClick={() => appDispatcher(removeTodo(id))}>Remove</button>
                     </div>
                 </TodoView>
             ))}
