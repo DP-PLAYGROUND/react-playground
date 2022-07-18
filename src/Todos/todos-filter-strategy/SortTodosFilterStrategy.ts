@@ -1,6 +1,6 @@
 import {TodosFilterStrategy} from '../TodosFilterStrategy';
 import {Todo} from '../Todo';
-import {TodosFilterSortType} from '../todos-filter-params/TodosFilterSortType';
+import {TodosFilterSortType} from '../TodosFilter/params/TodosFilterSortType';
 
 export class SortTodosFilterStrategy implements TodosFilterStrategy {
     constructor(private readonly sort: TodosFilterSortType) {}

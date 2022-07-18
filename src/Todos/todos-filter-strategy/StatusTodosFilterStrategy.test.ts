@@ -1,5 +1,5 @@
 import {Todo} from '../Todo';
-import {TodosFilterStatusType} from '../todos-filter-params/TodosFilterStatusType';
+import {TodosFilterStatusType} from '../TodosFilter/params/TodosFilterStatusType';
 import {StatusTodosFilterStrategy} from './StatusTodosFilterStrategy';
 
 describe('StatusTodosFilterStrategy', () => {

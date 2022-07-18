@@ -1,4 +1,4 @@
-import {TodosFilterParams} from './TodosFilterParams';
+import {TodosFilterParams} from './TodosFilter/TodosFilterParams';
 import {TodosFilterStrategy} from './TodosFilterStrategy';
 import {ChainedTodosFilterStrategy} from './todos-filter-strategy/ChainedTodosFilterStrategy';
 import {QueryTodosFilterStrategy} from './todos-filter-strategy/QueryTodosFilterStrategy';

@@ -1,6 +1,6 @@
 import {Todo} from '../Todo';
 import {SortTodosFilterStrategy} from './SortTodosFilterStrategy';
-import {TodosFilterSortType} from '../todos-filter-params/TodosFilterSortType';
+import {TodosFilterSortType} from '../TodosFilter/params/TodosFilterSortType';
 
 describe('SortTodosFilterStrategy', () => {
     it('should sort todos', () => {

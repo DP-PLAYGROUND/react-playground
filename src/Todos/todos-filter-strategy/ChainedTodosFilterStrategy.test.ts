@@ -1,9 +1,9 @@
 import {ChainedTodosFilterStrategy} from './ChainedTodosFilterStrategy';
 import {QueryTodosFilterStrategy} from './QueryTodosFilterStrategy';
 import {StatusTodosFilterStrategy} from './StatusTodosFilterStrategy';
-import {TodosFilterStatusType} from '../todos-filter-params/TodosFilterStatusType';
+import {TodosFilterStatusType} from '../TodosFilter/params/TodosFilterStatusType';
 import {SortTodosFilterStrategy} from './SortTodosFilterStrategy';
-import {TodosFilterSortType} from '../todos-filter-params/TodosFilterSortType';
+import {TodosFilterSortType} from '../TodosFilter/params/TodosFilterSortType';
 import {Todo} from '../Todo';
 import SpyInstance = jest.SpyInstance;
 

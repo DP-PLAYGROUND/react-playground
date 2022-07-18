@@ -1,6 +1,6 @@
 import {TodosFilterStrategy} from '../TodosFilterStrategy';
 import {Todo} from '../Todo';
-import {TodosFilterStatusType} from '../todos-filter-params/TodosFilterStatusType';
+import {TodosFilterStatusType} from '../TodosFilter/params/TodosFilterStatusType';
 
 export class StatusTodosFilterStrategy implements TodosFilterStrategy {
     constructor(private readonly status: TodosFilterStatusType) {}

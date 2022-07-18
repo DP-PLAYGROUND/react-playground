@@ -1,4 +1,4 @@
-import {TodoDraft} from './TodoDraft';
+import {TodoDraft} from './todo/TodoDraft';
 
 export interface Todo extends TodoDraft {
     readonly id: number;

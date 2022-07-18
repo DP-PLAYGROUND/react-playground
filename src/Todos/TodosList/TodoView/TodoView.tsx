@@ -1,6 +1,6 @@
 import {FunctionComponent, PropsWithChildren} from 'react';
 import styles from './TodoView.module.scss';
-import {TodoDraft} from '../../TodoDraft';
+import {TodoDraft} from '../../todo/TodoDraft';
 
 interface TodoViewProps extends TodoDraft {
     readonly onChange?: (todo: Partial<TodoDraft>) => void;
