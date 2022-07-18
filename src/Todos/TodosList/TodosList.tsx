@@ -4,7 +4,7 @@ import styles from './TodosList.module.scss'
 import {todosActions} from '../todosSlice';
 import {useAppDispatch} from '../../app/hooks';
 import {Todo} from '../Todo';
-import {DateTime} from '../../components/DateTime/DateTime';
+import {Date} from '../../components/Date/Date';
 
 interface TodosListProps {
     readonly todos: readonly Todo[]
@@ -21,7 +21,7 @@ export const TodosList: FunctionComponent<TodosListProps> = ({todos}) => {
                           completed={completed}
                           onChange={changes => appDispatcher(todosActions.updated({id, changes}))}>
                     <div className={styles.todoContent}>
-                        <div>Created at: <DateTime dateTime={createdAt}/></div>
+                        <div><Date value={createdAt} format={'ff'}/></div>
                         <button onClick={() => appDispatcher(todosActions.removed(id))}>Remove</button>
                     </div>
                 </TodoView>
