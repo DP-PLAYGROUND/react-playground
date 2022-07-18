@@ -20,5 +20,9 @@ describe('QueryTodosFilterStrategy', () => {
         expect(new QueryTodosFilterStrategy('s')
             .execute(todos))
             .toEqual([{ title: 'asd' }]);
+
+        expect(new QueryTodosFilterStrategy('')
+            .execute(todos))
+            .toEqual(todos);
     });
 })
