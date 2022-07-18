@@ -1,4 +1,4 @@
-import {createAsyncThunk, createEntityAdapter, createSelector, createSlice} from '@reduxjs/toolkit';
+import {createEntityAdapter, createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store/reducer';
 import {Todo} from './Todo';
 import {TodoDraft} from './todo/TodoDraft';
@@ -10,35 +10,24 @@ const todosAdapter = createEntityAdapter<Todo>({
 
 const initialState = todosAdapter.getInitialState();
 
-export const createTodo = createAsyncThunk<Todo, TodoDraft>(
-    `todos/create`,
-    draft => {
-        const date = new Date();
-
-        const id = date.getTime() + Math.round(performance.now());
-        const createdAt = date.toISOString();
-
-        return {...draft, id, createdAt}
-    });
-
-export const updateTodo = createAsyncThunk<{id: Todo['id'], changes: Partial<TodoDraft>}, {id: Todo['id'], changes: Partial<TodoDraft>}>(
-    'todos/update',
-    (params) => params
-);
-
-export const removeTodo = createAsyncThunk<Todo['id'], Todo['id']>(
-    'todos/remove',
-    id => id
-)
-
 const slice = createSlice({
     name: 'todos',
     initialState,
-    reducers: {},
-    extraReducers: builder => builder
-        .addCase(createTodo.fulfilled, todosAdapter.addOne)
-        .addCase(updateTodo.fulfilled, todosAdapter.updateOne)
-        .addCase(removeTodo.fulfilled, todosAdapter.removeOne)
+    reducers: {
+        create: (state, action: PayloadAction<TodoDraft>) => {
+            todosAdapter.addOne(state, {
+                ...action.payload,
+                createdAt: new Date().toISOString(),
+                id: state.ids.length
+            })
+        },
+        updated: (state, action: PayloadAction<Readonly<{id: Todo['id'], changes: Partial<TodoDraft>}>>) => {
+            todosAdapter.updateOne(state, action)
+        },
+        removed: (state, action: PayloadAction<Todo['id']>) => {
+            todosAdapter.removeOne(state, action)
+        }
+    }
 });
 
 export const { reducer: todosReducer, actions: todosActions } = slice;
