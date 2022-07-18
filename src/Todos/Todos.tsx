@@ -26,7 +26,7 @@ const Todos: FunctionComponent = () => {
                 <button onClick={onCreate}>Create</button>
             </header>
 
-            <section className={styles.todos}>
+            <section>
                 <TodosList todos={todos}/>
             </section>
         </>
