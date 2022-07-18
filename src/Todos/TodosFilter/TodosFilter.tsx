@@ -6,6 +6,7 @@ import {isTodosFilterStatusType, todosFilterStatusTypes} from '../todos-filter-p
 
 export interface TodosFilterProps extends TodosFilterParams {
     readonly onChange?: (changes: Partial<TodosFilterParams>) => void
+    readonly onReset?: () => void
 }
 
 export const TodosFilter: FunctionComponent<TodosFilterProps> =
@@ -13,6 +14,7 @@ export const TodosFilter: FunctionComponent<TodosFilterProps> =
          query,
          sort,
          status,
+         onReset,
          onChange
      }) => {
         const handleSortChange: ChangeEventHandler<HTMLSelectElement> = event => {
@@ -67,6 +69,10 @@ export const TodosFilter: FunctionComponent<TodosFilterProps> =
                                     value={sort}>{sort}</option>
                         ))}
                     </select>
+                </div>
+
+                <div className={styles.item}>
+                    <button onClick={onReset}>Reset</button>
                 </div>
             </section>
         )
