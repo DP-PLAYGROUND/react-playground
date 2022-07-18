@@ -1,7 +1,7 @@
 import {FunctionComponent, useMemo, useReducer} from 'react';
 import styles from './Todos.module.scss'
 import {TodosList} from './TodosList/TodosList';
-import {useAppDispatch, useAppSelector} from '../app/hooks';
+import {useAppDispatch, useAppSelector} from '../store/hooks';
 import {createTodo, selectFilteredTodos} from './todosSlice';
 import {TodosFilter} from './TodosFilter/TodosFilter';
 import {TodosFilterParams} from './TodosFilterParams';

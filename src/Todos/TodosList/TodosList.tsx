@@ -2,7 +2,7 @@ import {FunctionComponent} from 'react';
 import {TodoView} from './TodoView/TodoView';
 import styles from './TodosList.module.scss'
 import {removeTodo, updateTodo} from '../todosSlice';
-import {useAppDispatch} from '../../app/hooks';
+import {useAppDispatch} from '../../store/hooks';
 import {Todo} from '../Todo';
 import {DateFormat} from '../../components/DateFormat/DateFormat';
 

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createEntityAdapter, createSelector, createSlice} from '@reduxjs/toolkit';
-import {RootState} from '../app/reducer';
+import {RootState} from '../store/reducer';
 import {Todo} from './Todo';
 import {TodoDraft} from './TodoDraft';
 import {TodosFilterStrategy} from './TodosFilterStrategy';
