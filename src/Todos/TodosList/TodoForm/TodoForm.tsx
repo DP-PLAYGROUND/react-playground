@@ -1,11 +1,11 @@
 import {FunctionComponent, PropsWithChildren} from 'react';
-import styles from './TodoView.module.scss';
+import styles from './TodoForm.module.scss';
 import {TodoDraft} from '../../todo/TodoDraft';
 
-interface TodoViewProps extends TodoDraft {
+interface TodoFormProps extends TodoDraft {
     readonly onChange?: (todo: Partial<TodoDraft>) => void;
 }
-export const TodoView: FunctionComponent<PropsWithChildren<TodoViewProps>> =
+export const TodoForm: FunctionComponent<PropsWithChildren<TodoFormProps>> =
     ({
          children,
          title,
@@ -14,15 +14,15 @@ export const TodoView: FunctionComponent<PropsWithChildren<TodoViewProps>> =
     ) => {
         return (
             <div className={styles.todo}>
-                <div className={styles.editable}>
+                <form className={styles.editable} onSubmit={event => event.preventDefault()}>
                     <input type="checkbox"
                            checked={completed}
                            onChange={event => onChange?.({ completed: event.target.checked})}/>
                     <input type="text"
                            value={title}
                            onChange={event => onChange?.({title: event.target.value})}/>
-                </div>
-                <div>{children}</div>
+                </form>
+                <footer>{children}</footer>
             </div>
         )
     }

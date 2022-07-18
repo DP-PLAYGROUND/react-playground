@@ -1,5 +1,5 @@
 import {FunctionComponent} from 'react';
-import {TodoView} from './TodoView/TodoView';
+import {TodoForm} from './TodoForm/TodoForm';
 import styles from './TodosList.module.scss'
 import {todosActions} from '../todosSlice';
 import {useAppDispatch} from '../../store/hooks';
@@ -16,15 +16,17 @@ export const TodosList: FunctionComponent<TodosListProps> = ({todos}) => {
     return (
         <section className={styles.list}>
             {todos.map(({id, title, completed, createdAt}) => (
-                <TodoView key={id}
+                <TodoForm key={id}
                           title={title}
                           completed={completed}
                           onChange={changes => appDispatcher(todosActions.updated({id, changes}))}>
-                    <div className={styles.todoContent}>
-                        <div><DateFormat value={createdAt} format={'ff'}/></div>
+                    <div className={styles.todoFooter}>
+                        <div>
+                            <DateFormat value={createdAt} format={'ff'}/>
+                        </div>
                         <button onClick={() => appDispatcher(todosActions.removed(id))}>Remove</button>
                     </div>
-                </TodoView>
+                </TodoForm>
             ))}
         </section>
     )
