@@ -5,6 +5,7 @@ import {startAppListening} from '../store/listenerMiddleware';
 import {usersApi} from '../api/users/usersApi';
 import {UsersParams} from '../api/users/UsersParams';
 import {AxiosError} from 'axios';
+import {toast} from 'react-toastify';
 
 export interface UsersState extends Required<Pick<UsersParams, 'seed' | 'results'>>{
     readonly status: 'idle' | 'loading';
@@ -64,7 +65,7 @@ startAppListening({
 
         usersApi.get({page, results, seed})
             .then(users => api.dispatch(usersActions.loaded(users.results)))
-            .catch((error: AxiosError) => api.dispatch(usersActions.error(error.status ?? 'Something went wrong')))
+            .catch((error: AxiosError) => api.dispatch(usersActions.error(error.message ?? 'Something went wrong')))
             .finally(api.subscribe)
     }
 })
@@ -72,6 +73,6 @@ startAppListening({
 startAppListening({
     actionCreator: usersActions.error,
     effect: (action) => {
-        console.log(action.payload);
+        toast(action.payload, { type: 'error'})
     }
 })
