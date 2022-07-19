@@ -1,8 +1,9 @@
-import {FunctionComponent, useEffect, useMemo, useRef} from 'react';
+import {FunctionComponent, useEffect, useMemo} from 'react';
 import styles from './Users.module.scss';
 import {useAppDispatch, useAppSelector} from '../store/hooks';
 import {selectAllUsers, selectTotalUsers, selectUsersIsLoading, usersActions} from './usersSlice';
 import {UserCard} from './UserCard/UserCard';
+import {useElement} from '../hooks/useElement';
 
 const Users: FunctionComponent = () => {
     const users = useAppSelector(selectAllUsers);
@@ -13,31 +14,24 @@ const Users: FunctionComponent = () => {
 
     const total = useAppSelector(selectTotalUsers);
 
-    const loaderTrigger = useRef<HTMLDivElement>(null);
+    const [loaderTriggerElement, loaderTriggerRef] = useElement();
 
-    const intersectionObserver = useMemo(() => new IntersectionObserver(entries =>  {
-        if (entries.some(({isIntersecting}) => !isIntersecting)) {
-            return;
-        }
-
-        appDispatch(usersActions.loadMore());
-    }, {
-        threshold: 1
-    }), [appDispatch])
+    const intersectionObserver = useMemo(() => new IntersectionObserver(
+            entries => entries.some(({isIntersecting}) =>
+                !isIntersecting) ? null : appDispatch(usersActions.loadMore()),
+            {threshold: 1}
+        ), [appDispatch]
+    )
 
     useEffect(() => {
-        const { current } = loaderTrigger;
-
-        if (!current) {
+        if (!loaderTriggerElement) {
             return;
         }
 
-        intersectionObserver.observe(current);
+        intersectionObserver.observe(loaderTriggerElement);
 
-        return () => {
-            intersectionObserver.disconnect();
-        }
-    }, [intersectionObserver])
+        return () => intersectionObserver.disconnect();
+    }, [intersectionObserver, loaderTriggerElement])
 
     return (
         <section>
@@ -53,7 +47,7 @@ const Users: FunctionComponent = () => {
             </section>
 
             <footer className={styles.footer}>
-                {isLoading ? <div>Loading...</div> : <div ref={loaderTrigger}></div>}
+                {isLoading ? <div>Loading...</div> : <div ref={loaderTriggerRef}></div>}
             </footer>
         </section>
     )
