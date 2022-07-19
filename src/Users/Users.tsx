@@ -19,7 +19,7 @@ const Users: FunctionComponent = () => {
     const intersectionObserver = useMemo(() => new IntersectionObserver(
             entries => entries.some(({isIntersecting}) =>
                 !isIntersecting) ? null : appDispatch(usersActions.loadMore()),
-            {threshold: 1}
+            {threshold: 1, rootMargin: '200px'}
         ), [appDispatch]
     )
 
@@ -47,7 +47,8 @@ const Users: FunctionComponent = () => {
             </section>
 
             <footer className={styles.footer}>
-                {isLoading ? <div>Loading...</div> : <div ref={loaderTriggerRef}></div>}
+                {isLoading && <div>Loading...</div>}
+                <div ref={loaderTriggerRef}></div>
             </footer>
         </section>
     )

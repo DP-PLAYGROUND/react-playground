@@ -4,10 +4,12 @@ import {RootState} from '../store/reducer';
 import {startAppListening} from '../store/listenerMiddleware';
 import {usersApi} from '../api/users/usersApi';
 import {UsersParams} from '../api/users/UsersParams';
+import {AxiosError} from 'axios';
 
 export interface UsersState extends Required<Pick<UsersParams, 'seed' | 'results'>>{
-    readonly status: 'idle' | 'loading'
+    readonly status: 'idle' | 'loading';
 }
+
 const usersAdapter = createEntityAdapter<User>({
     selectId: model => model.login.uuid
 })
@@ -28,6 +30,9 @@ const slice = createSlice({
         loaded: (state, action: PayloadAction<readonly User[]>) => {
             usersAdapter.upsertMany(state, action.payload)
             state.status = 'idle'
+        },
+        error: (state, _action: PayloadAction<string>) => {
+            state.status = 'idle';
         }
     }
 })
@@ -58,11 +63,15 @@ startAppListening({
         api.unsubscribe();
 
         usersApi.get({page, results, seed})
-            .then(users => {
-                api.dispatch(usersActions.loaded(users.results))
-            })
-            .finally(() => {
-                api.subscribe();
-            })
+            .then(users => api.dispatch(usersActions.loaded(users.results)))
+            .catch((error: AxiosError) => api.dispatch(usersActions.error(error.status ?? 'Something went wrong')))
+            .finally(api.subscribe)
+    }
+})
+
+startAppListening({
+    actionCreator: usersActions.error,
+    effect: (action) => {
+        console.log(action.payload);
     }
 })
