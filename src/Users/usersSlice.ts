@@ -1,4 +1,4 @@
-import {createEntityAdapter, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createEntityAdapter, createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {User} from '../api/users/UsersResponse';
 import {RootState} from '../store/reducer';
 import {startAppListening} from '../store/listenerMiddleware';
@@ -38,6 +38,13 @@ export const {
     selectAll: selectAllUsers,
     selectTotal: selectTotalUsers
 } = usersAdapter.getSelectors<RootState>(state => state.users);
+
+export const selectUsersStatus = (state: RootState) => state.users.status;
+
+export const selectUsersIsLoading = createSelector(
+    [selectUsersStatus],
+    status => status === 'loading'
+)
 
 startAppListening({
     actionCreator: usersActions.loadMore,

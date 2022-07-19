@@ -1,5 +1,17 @@
+.header {
+  position: sticky;
+  top: 0;
+  margin-bottom: 10px;
+  background: #ffffff;
+  padding: 10px 0;
+}
+
 .list {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.footer {
+  margin-top: 10px;
 }
