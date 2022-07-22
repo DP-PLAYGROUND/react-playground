@@ -1,6 +1,7 @@
 import React, {lazy, Suspense} from 'react';
 import styles from './App.module.scss';
 import {NavLink, Route, Routes} from 'react-router-dom';
+import Drawing from './Drawing/Drawing';
 
 const Home = lazy(() => import('./Home/Home'));
 const Todos = lazy(() => import('./Todos/Todos'));
@@ -20,6 +21,9 @@ function App() {
                     <NavLink to="/users" className={
                         ({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link
                     }>Users</NavLink>
+                    <NavLink to="/drawing" className={
+                        ({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link
+                    }>Drawing</NavLink>
                 </nav>
             </header>
 
@@ -38,6 +42,11 @@ function App() {
                     <Route path="users" element={
                         <Suspense>
                             <Users />
+                        </Suspense>
+                    } />
+                    <Route path="drawing" element={
+                        <Suspense>
+                            <Drawing />
                         </Suspense>
                     } />
                 </Routes>
