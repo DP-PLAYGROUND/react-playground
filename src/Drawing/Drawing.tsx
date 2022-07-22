@@ -1,9 +1,10 @@
 import {FunctionComponent} from 'react';
+import {DrawingPalette} from './DrawingPalette/DrawingPalette';
 
 const Drawing: FunctionComponent = () => {
     return (
         <section>
-            Drawing
+            <DrawingPalette/>
         </section>
     )
 }
