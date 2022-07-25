@@ -74,6 +74,8 @@ export const useMovement = <T extends HTMLElement>(
         return;
       }
 
+      event.preventDefault();
+
       const coords = movementCoordsFactory(event);
 
       events.onMove?.(coerceCoords(coords));
