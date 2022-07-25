@@ -5,11 +5,9 @@ import { FreeHand } from "./DrawingPalette/FreeHand/FreeHand";
 
 const Drawing: FunctionComponent = () => {
   return (
-    <section className={styles.palette}>
-      <DrawingPalette>
+    <DrawingPalette className={styles.palette}>
         <FreeHand />
       </DrawingPalette>
-    </section>
   );
 };
 
