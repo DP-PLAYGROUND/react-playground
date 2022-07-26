@@ -2,7 +2,15 @@ import { FunctionComponent, useContext, useEffect } from "react";
 import { MovementCoords, useMovement } from "../../../hooks/useMovement";
 import { CanvasContext } from "../CanvasContext";
 
-export const FreeHand: FunctionComponent = () => {
+export type FreeHandProps = Partial<
+  Pick<CanvasRenderingContext2D, "lineWidth" | "lineCap" | "strokeStyle">
+>;
+
+export const FreeHand: FunctionComponent<FreeHandProps> = ({
+  lineWidth = 1,
+  lineCap = "round",
+  strokeStyle = "#000000",
+}) => {
   const canvasElement = useContext(CanvasContext);
 
   const canvasContext = canvasElement?.getContext("2d");
@@ -27,10 +35,10 @@ export const FreeHand: FunctionComponent = () => {
       return;
     }
 
-    canvasContext.lineWidth = 1;
-    canvasContext.lineCap = "round";
-    canvasContext.strokeStyle = "#000000";
-  }, [canvasContext, canvasElement]);
+    canvasContext.lineWidth = lineWidth;
+    canvasContext.lineCap = lineCap;
+    canvasContext.strokeStyle = strokeStyle;
+  }, [canvasContext, lineWidth, lineCap, strokeStyle]);
 
   return null;
 };
