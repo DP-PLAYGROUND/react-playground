@@ -12,10 +12,10 @@ export interface ExportDrawingProps {
     readonly quality?: number;
 }
 export const ExportDrawing: FunctionComponent<ExportDrawingProps> = ({type, quality}) => {
-    const canvasElement = useContext(CanvasContext);
+    const canvasContext = useContext(CanvasContext);
 
     const handleExport = () => {  
-        const url = canvasElement?.toDataURL(type, quality);
+        const url = canvasContext.element?.toDataURL(type, quality);
     
         if (!url) {
           return;

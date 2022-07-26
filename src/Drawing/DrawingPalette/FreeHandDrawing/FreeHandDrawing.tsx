@@ -11,34 +11,34 @@ export const FreeHandDrawing: FunctionComponent<FreeHandProps> = ({
   lineCap = "round",
   strokeStyle = "#000000",
 }) => {
-  const canvasElement = useContext(CanvasContext);
+  const canvasContext = useContext(CanvasContext);
 
-  const canvasContext = canvasElement?.getContext("2d");
+  const canvasElementContext = canvasContext.element?.getContext("2d");
 
   const drawLine = (coords: MovementCoords) => {
-    canvasContext?.lineTo(coords.x, coords.y);
-    canvasContext?.stroke();
+    canvasElementContext?.lineTo(coords.x, coords.y);
+    canvasElementContext?.stroke();
   };
 
-  useMovement(canvasElement, {
+  useMovement(canvasContext.element, {
     onStart: (event) => {
-      canvasContext?.beginPath();
+      canvasElementContext?.beginPath();
 
       drawLine(event);
     },
     onMove: drawLine,
-    onEnd: () => canvasContext?.closePath(),
+    onEnd: () => canvasElementContext?.closePath(),
   });
 
   useEffect(() => {
-    if (!canvasContext) {
+    if (!canvasElementContext) {
       return;
     }
 
-    canvasContext.lineWidth = lineWidth;
-    canvasContext.lineCap = lineCap;
-    canvasContext.strokeStyle = strokeStyle;
-  }, [canvasContext, lineWidth, lineCap, strokeStyle]);
+    canvasElementContext.lineWidth = lineWidth;
+    canvasElementContext.lineCap = lineCap;
+    canvasElementContext.strokeStyle = strokeStyle;
+  }, [canvasElementContext, lineWidth, lineCap, strokeStyle]);
 
   return null;
 };
