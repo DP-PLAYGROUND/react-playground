@@ -6,7 +6,7 @@ export type FreeHandProps = Partial<
   Pick<CanvasRenderingContext2D, "lineWidth" | "lineCap" | "strokeStyle">
 >;
 
-export const FreeHand: FunctionComponent<FreeHandProps> = ({
+export const FreeHandDrawing: FunctionComponent<FreeHandProps> = ({
   lineWidth = 1,
   lineCap = "round",
   strokeStyle = "#000000",
