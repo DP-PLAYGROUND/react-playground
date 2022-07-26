@@ -7,6 +7,7 @@ import {
 } from "react";
 import { FunctionComponent } from "react";
 import { CanvasContext } from "./CanvasContext";
+import { useCanvasResize } from "./useCanvasResize";
 
 export type DrawingPaletteProps = HTMLAttributes<HTMLCanvasElement>;
 
@@ -22,25 +23,7 @@ export const DrawingPalette: FunctionComponent<
     []
   );
 
-  useEffect(() => {
-    const canvasContext = canvasElement?.getContext("2d");
-
-    if (!canvasElement || !canvasContext) {
-      return;
-    }
-
-    const { width, height } = canvasElement.getBoundingClientRect();
-
-    if (canvasElement.width === width && canvasElement.height === height) {
-      return;
-    }
-
-    const { devicePixelRatio: ratio = 1 } = window;
-
-    canvasElement.width = width * ratio;
-    canvasElement.height = height * ratio;
-    canvasContext.scale(ratio, ratio);
-  }, [canvasElement]);
+  useCanvasResize(canvasElement);
 
   return (
     <CanvasContext.Provider value={canvasElement}>
