@@ -1,20 +1,21 @@
 import {
-  createElement,
   HTMLAttributes,
   PropsWithChildren,
   useCallback,
-  useEffect,
   useState,
 } from "react";
 import { FunctionComponent } from "react";
+import { useMovement } from "../../hooks/useMovement";
 import { CanvasContext } from "./CanvasContext";
 import { useCanvasResize } from "./useCanvasResize";
 
-export type DrawingPaletteProps = HTMLAttributes<HTMLCanvasElement>;
+export interface DrawingPaletteProps extends HTMLAttributes<HTMLCanvasElement> {
+  readonly onDrawingChange?: (element: HTMLCanvasElement) => void;
+}
 
 export const DrawingPalette: FunctionComponent<
   PropsWithChildren<DrawingPaletteProps>
-> = ({ children, ...attrs }) => {
+> = ({ children, onDrawingChange, ...attrs }) => {
   const [canvasElement, setCanvasElement] = useState<HTMLCanvasElement | null>(
     null
   );
@@ -25,6 +26,10 @@ export const DrawingPalette: FunctionComponent<
   );
 
   useCanvasResize(canvasElement);
+
+  useMovement(canvasElement, {
+    onEnd: () => canvasElement ? onDrawingChange?.(canvasElement) : null
+  })
 
   return (
     <CanvasContext.Provider value={canvasElement}>

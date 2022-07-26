@@ -64,6 +64,10 @@ export const useMovement = <T extends HTMLElement>(
     };
 
     const releaseListener = () => {
+      if (!isMovingRef.current) {
+        return;
+      }
+      
       isMovingRef.current = false;
 
       events.onEnd?.();
