@@ -5,7 +5,7 @@ import { CanvasContext } from "../CanvasContext";
 export const DrawingUndoRedo: FunctionComponent = () => {
   const canvasContext = useContext(CanvasContext);
 
-  const [snapshotNode, setSnapshotNode] = useState<SnapshotNode<string> | null>(null);
+  const [snapshotNode, setSnapshotNode] = useState<SnapshotNode | null>(null);
 
   const redraw = (snapshot: string) => {
     const { element: canvasElement } = canvasContext;
@@ -29,39 +29,24 @@ export const DrawingUndoRedo: FunctionComponent = () => {
     };
   };
 
-  const handleUndo = () => {
-    const { previous } = snapshotNode ?? {};
-
-    if (!previous) {
-      return;
-    }
-
-    redraw(previous.value);
-    setSnapshotNode(previous);
-  };
-
-  const handleRedo = () => {
-    const { next } = snapshotNode ?? {};
-
-    if (!next) {
-      return;
-    }
-
-    redraw(next.value);
-    setSnapshotNode(next);
+  const applySnapshotNode = (snapshotNode: SnapshotNode) => {
+    redraw(snapshotNode.value);
+    setSnapshotNode(snapshotNode);
   };
 
   useEffect(() => {
+    const { element } = canvasContext;
+
+    if (!element) {
+      return;
+    }
+
+    setSnapshotNode(new SnapshotNode(element.toDataURL()));
+
     const unsubscribeDrawingChanges = canvasContext.drawingChange.subscribe(
       () => {
-        const snapshot = canvasContext.element?.toDataURL();
-
-        if (!snapshot) {
-          return;
-        }
-
         setSnapshotNode((state) => {
-          const node = new SnapshotNode(snapshot);
+          const node = new SnapshotNode(element.toDataURL());
 
           if (state) {
             state.next = node;
@@ -81,10 +66,16 @@ export const DrawingUndoRedo: FunctionComponent = () => {
 
   return (
     <>
-      <button disabled={!snapshotNode?.previous} onClick={handleUndo}>
+      <button
+        disabled={!snapshotNode?.previous}
+        onClick={() => applySnapshotNode(snapshotNode?.previous!)}
+      >
         Undo
       </button>
-      <button disabled={!snapshotNode?.next} onClick={handleRedo}>
+      <button
+        disabled={!snapshotNode?.next}
+        onClick={() => applySnapshotNode(snapshotNode?.next!)}
+      >
         Redo
       </button>
     </>

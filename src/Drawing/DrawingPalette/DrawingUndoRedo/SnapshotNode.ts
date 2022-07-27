@@ -1,6 +1,6 @@
-export class SnapshotNode<T = any> {
-    previous: SnapshotNode<T> | null = null;
-    next: SnapshotNode<T> | null = null;
+export class SnapshotNode {
+    previous: SnapshotNode | null = null;
+    next: SnapshotNode | null = null;
 
-    constructor(readonly value: T) {}
+    constructor(readonly value: string) {}
 }
