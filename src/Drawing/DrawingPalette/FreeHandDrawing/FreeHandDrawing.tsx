@@ -27,7 +27,10 @@ export const FreeHandDrawing: FunctionComponent<FreeHandProps> = ({
       drawLine(event);
     },
     onMove: drawLine,
-    onEnd: () => canvasElementContext?.closePath(),
+    onEnd: () => {
+      canvasElementContext?.closePath();
+      canvasContext.drawingChange.notify();
+    },
   });
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { FunctionComponent, useContext } from "react";
 import { CanvasContext } from "../CanvasContext";
 
-export interface ExportDrawingProps {
+export interface DrawingExportProps {
     /**
      * @example image/png
      */
@@ -11,7 +11,7 @@ export interface ExportDrawingProps {
      */
     readonly quality?: number;
 }
-export const ExportDrawing: FunctionComponent<ExportDrawingProps> = ({type, quality}) => {
+export const DrawingExport: FunctionComponent<DrawingExportProps> = ({type, quality}) => {
     const canvasContext = useContext(CanvasContext);
 
     const handleExport = () => {  
