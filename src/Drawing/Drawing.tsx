@@ -1,12 +1,9 @@
 import { FunctionComponent } from "react";
-import { Canvas } from "./Canvas/Canvas";
-import { CanvasPencil } from "./Canvas/Tools/CanvasPencil";
+import { Signature } from "./Signature/Signature";
 
 const Drawing: FunctionComponent = () => {
   return (
-    <Canvas style={{touchAction: 'none'}}>
-      <CanvasPencil />
-    </Canvas>
+    <Signature/>
   );
 };
 

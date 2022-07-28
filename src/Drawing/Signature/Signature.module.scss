@@ -1,0 +1,10 @@
+.signature {
+    display: inline-flex;
+    flex-flow: column;
+    gap: 10px;
+
+    .canvas {
+        display: flex;
+        border: 1px solid #000;
+    }
+}
