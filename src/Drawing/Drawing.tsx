@@ -1,16 +1,14 @@
 import { FunctionComponent } from "react";
-import { DrawingPalette } from "./DrawingPalette/DrawingPalette";
-import { FreeHandDrawing } from "./DrawingPalette/FreeHandDrawing/FreeHandDrawing";
-import { DrawingExport } from "./DrawingPalette/DrawingExport/DrawingExport";
-import { DrawingUndoRedo } from "./DrawingPalette/DrawingUndoRedo/DrawingUndoRedo";
+import { Canvas } from "./Canvas/Canvas";
+import { FreeHand } from "./Canvas/Tools/FreeHand";
 
 const Drawing: FunctionComponent = () => {
   return (
-    <DrawingPalette>
-      <FreeHandDrawing />
-      <DrawingUndoRedo/>
-      <DrawingExport type="image/webp" quality={1}/>
-    </DrawingPalette>
+    <div style={{ display: "inline-flex", border: "1px solid black" }}>
+      <Canvas>
+        <FreeHand />
+      </Canvas>
+    </div>
   );
 };
 

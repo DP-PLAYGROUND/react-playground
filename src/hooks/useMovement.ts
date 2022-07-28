@@ -67,7 +67,7 @@ export const useMovement = <T extends HTMLElement>(
       if (!isMovingRef.current) {
         return;
       }
-      
+
       isMovingRef.current = false;
 
       events.onEnd?.();
