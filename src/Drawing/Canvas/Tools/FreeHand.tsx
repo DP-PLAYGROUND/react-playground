@@ -5,14 +5,27 @@ import { CanvasContext } from "../CanvasContext";
 export const FreeHand: FunctionComponent = () => {
   const context = useContext(CanvasContext);
 
-  const drawLine = (coords: MovementCoords) => {
-    context.lineTo(coords.x, coords.y);
-    context.stroke();
-  };
-
   useMovement(context.canvas, {
-    onStart: () => context.beginPath(),
-    onMove: drawLine,
+    onStart: (coords) => {
+      context.beginPath();
+
+      if (context.lineCap === "round") {
+        context.arc(coords.x, coords.y, context.lineWidth / 2, 0, 2 * Math.PI);
+        context.fill();
+        return;
+      }
+
+      context.fillRect(
+        coords.x - context.lineWidth / 2,
+        coords.y - context.lineWidth / 2,
+        context.lineWidth,
+        context.lineWidth
+      );
+    },
+    onMove: (coords: MovementCoords) => {
+      context.lineTo(coords.x, coords.y);
+      context.stroke();
+    },
     onEnd: () => context.closePath(),
   });
 
