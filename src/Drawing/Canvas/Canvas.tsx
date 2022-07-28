@@ -1,4 +1,5 @@
 import {
+  CanvasHTMLAttributes,
   FunctionComponent,
   PropsWithChildren,
   useCallback,
@@ -6,17 +7,30 @@ import {
 } from "react";
 import { CanvasContext } from "./CanvasContext";
 
-export const Canvas: FunctionComponent<PropsWithChildren> = ({ children }) => {
+export interface CanvasProps extends CanvasHTMLAttributes<HTMLCanvasElement> {
+  readonly onInit?: (context: CanvasRenderingContext2D) => void;
+}
+
+export const Canvas: FunctionComponent<PropsWithChildren<CanvasProps>> = ({
+  children,
+  onInit,
+  ...attrs
+}) => {
   const [context, setContext] = useState<CanvasRenderingContext2D>();
 
   const canvasRef = useCallback((element: HTMLCanvasElement | null) => {
     const context = element?.getContext("2d");
 
-    return context && setContext(context);
-  }, []);
+    if (!context) {
+      return;
+    }
+
+    setContext(context);
+    onInit?.(context);
+  }, [onInit]);
 
   return (
-    <canvas ref={canvasRef}>
+    <canvas ref={canvasRef} {...attrs}>
       {context && (
         <CanvasContext.Provider value={context}>
           {children}

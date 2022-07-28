@@ -2,7 +2,12 @@ import { FunctionComponent, useContext } from "react";
 import { useMovement, MovementCoords } from "../../../hooks/useMovement";
 import { CanvasContext } from "../CanvasContext";
 
-export const FreeHand: FunctionComponent = () => {
+export interface CanvasPencilProps {
+  readonly onChange?: (context: CanvasRenderingContext2D) => void;
+}
+export const CanvasPencil: FunctionComponent<CanvasPencilProps> = ({
+  onChange,
+}) => {
   const context = useContext(CanvasContext);
 
   useMovement(context.canvas, {
@@ -26,7 +31,11 @@ export const FreeHand: FunctionComponent = () => {
       context.lineTo(coords.x, coords.y);
       context.stroke();
     },
-    onEnd: () => context.closePath(),
+    onEnd: () => {
+      context.closePath();
+
+      onChange?.(context);
+    },
   });
 
   return null;

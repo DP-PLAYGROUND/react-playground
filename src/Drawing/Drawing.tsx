@@ -1,14 +1,12 @@
 import { FunctionComponent } from "react";
 import { Canvas } from "./Canvas/Canvas";
-import { FreeHand } from "./Canvas/Tools/FreeHand";
+import { CanvasPencil } from "./Canvas/Tools/CanvasPencil";
 
 const Drawing: FunctionComponent = () => {
   return (
-    <div style={{ display: "inline-flex", border: "1px solid black" }}>
-      <Canvas>
-        <FreeHand />
-      </Canvas>
-    </div>
+    <Canvas>
+      <CanvasPencil />
+    </Canvas>
   );
 };
 
