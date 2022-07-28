@@ -4,7 +4,7 @@ import { CanvasPencil } from "./Canvas/Tools/CanvasPencil";
 
 const Drawing: FunctionComponent = () => {
   return (
-    <Canvas>
+    <Canvas style={{touchAction: 'none'}}>
       <CanvasPencil />
     </Canvas>
   );
