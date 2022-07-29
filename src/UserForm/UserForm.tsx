@@ -1,6 +1,9 @@
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { FunctionComponent } from "react";
 import styles from "./UserForm.module.scss";
+import { emailValidator } from "./validator/emailValidator";
+import { nameValidator } from "./validator/nameValidator";
+import { passwordValidator } from "./validator/passwordValidator";
 
 const UserForm: FunctionComponent = () => {
   return (
@@ -8,16 +11,32 @@ const UserForm: FunctionComponent = () => {
       initialValues={{
         name: "",
         email: "",
-        password: ""
+        password: "",
       }}
-      onSubmit={values => {
+      onSubmit={(values) => {
         console.log(values);
       }}
     >
       <Form className={styles.form}>
-        <Field name="name" placeholder="Name"></Field>
-        <Field name="email" type="email" placeholder="Email"></Field>
-        <Field name="password" type="password" placeholder="Password"></Field>
+        <Field name="name" placeholder="Name" validate={nameValidator}></Field>
+        <ErrorMessage name="name" />
+
+        <Field
+          name="email"
+          type="email"
+          placeholder="Email"
+          validate={emailValidator}
+        ></Field>
+        <ErrorMessage name="email" />
+
+        <Field
+          name="password"
+          type="password"
+          placeholder="Password"
+          validate={passwordValidator}
+        ></Field>
+        <ErrorMessage name="password" />
+
         <button type="submit">Submit</button>
       </Form>
     </Formik>
