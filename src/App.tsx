@@ -6,7 +6,7 @@ const Home = lazy(() => import('./Home/Home'));
 const Todos = lazy(() => import('./Todos/Todos'));
 const Users = lazy(() => import('./Users/Users'));
 const Drawing = lazy(() => import('./Drawing/Drawing'));
-const Form = lazy(() => import('./Form/Form'));
+const UserForm = lazy(() => import('./UserForm/UserForm'));
 
 function App() {
     return (
@@ -25,9 +25,9 @@ function App() {
                     <NavLink to="/drawing" className={
                         ({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link
                     }>Drawing</NavLink>
-                    <NavLink to="/form" className={
+                    <NavLink to="/user-form" className={
                         ({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link
-                    }>Form</NavLink>
+                    }>User form</NavLink>
                 </nav>
             </header>
 
@@ -53,9 +53,9 @@ function App() {
                             <Drawing />
                         </Suspense>
                     } />
-                    <Route path="form" element={
+                    <Route path="user-form" element={
                         <Suspense>
-                            <Form />
+                            <UserForm />
                         </Suspense>
                     } />
                 </Routes>
