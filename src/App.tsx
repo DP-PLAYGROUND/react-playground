@@ -1,11 +1,12 @@
 import React, {lazy, Suspense} from 'react';
 import styles from './App.module.scss';
 import {NavLink, Route, Routes} from 'react-router-dom';
-import Drawing from './Drawing/Drawing';
 
 const Home = lazy(() => import('./Home/Home'));
 const Todos = lazy(() => import('./Todos/Todos'));
 const Users = lazy(() => import('./Users/Users'));
+const Drawing = lazy(() => import('./Drawing/Drawing'));
+const Form = lazy(() => import('./Form/Form'));
 
 function App() {
     return (
@@ -24,6 +25,9 @@ function App() {
                     <NavLink to="/drawing" className={
                         ({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link
                     }>Drawing</NavLink>
+                    <NavLink to="/form" className={
+                        ({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link
+                    }>Form</NavLink>
                 </nav>
             </header>
 
@@ -47,6 +51,11 @@ function App() {
                     <Route path="drawing" element={
                         <Suspense>
                             <Drawing />
+                        </Suspense>
+                    } />
+                    <Route path="form" element={
+                        <Suspense>
+                            <Form />
                         </Suspense>
                     } />
                 </Routes>
