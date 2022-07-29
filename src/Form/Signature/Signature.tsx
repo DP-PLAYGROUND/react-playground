@@ -1,6 +1,6 @@
 import { FunctionComponent, useCallback, useState } from "react";
-import { Canvas } from "../Canvas/Canvas";
-import { CanvasPencil } from "../Canvas/Tools/CanvasPencil";
+import { Canvas } from "../../components/Canvas/Canvas";
+import { CanvasPencil } from "../../components/Canvas/Tools/CanvasPencil";
 import styles from "./Signature.module.scss";
 import { SignatureSnapshot } from "./SignatureSnapshot";
 import { Actions } from "./Actions/Actions";

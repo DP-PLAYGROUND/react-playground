@@ -1,12 +1,13 @@
 import { FunctionComponent } from "react";
-import { Signature } from "./Signature/Signature";
+import { Canvas } from "../components/Canvas/Canvas";
+import { CanvasPencil } from "../components/Canvas/Tools/CanvasPencil";
+import styles from './Drawing.module.scss';
 
 const Drawing: FunctionComponent = () => {
-  const handleSignatureChange = (data: ImageData) => {
-    console.log(data);
-  };
-
-  return <Signature onChange={handleSignatureChange} />;
+  return (
+    <Canvas className={styles.canvas}>
+      <CanvasPencil/>
+    </Canvas>);
 };
 
 export default Drawing;
