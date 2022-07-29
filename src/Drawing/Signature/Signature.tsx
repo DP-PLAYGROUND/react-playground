@@ -4,6 +4,7 @@ import { CanvasPencil } from "../Canvas/Tools/CanvasPencil";
 import styles from "./Signature.module.scss";
 import { SignatureSnapshot } from "./SignatureSnapshot";
 import { Actions } from "./Actions/Actions";
+import { useEffect } from "react";
 
 const signatureSnapshotFactory = (context: CanvasRenderingContext2D) => {
   const imageData = context.getImageData(
@@ -16,23 +17,30 @@ const signatureSnapshotFactory = (context: CanvasRenderingContext2D) => {
   return new SignatureSnapshot(imageData);
 };
 
-export const Signature: FunctionComponent = () => {
+export interface SignatureProps {
+  readonly onChange?: (data: ImageData) => void;
+}
+
+export const Signature: FunctionComponent<SignatureProps> = ({ onChange }) => {
   const [context, setContext] = useState<CanvasRenderingContext2D>();
 
   const [currentSignatureSnapshot, setCurrentSignatureSnapshot] =
     useState<SignatureSnapshot | null>(null);
 
+  useEffect(() => {
+    return (
+      currentSignatureSnapshot?.value &&
+      onChange?.(currentSignatureSnapshot.value)
+    );
+  }, [onChange, currentSignatureSnapshot]);
+
   const handleInit = useCallback((context: CanvasRenderingContext2D) => {
     setContext(context);
 
-    handleReset(context);
-  }, []);
-
-  const handleReset = (context: CanvasRenderingContext2D) => {
     const signatureSnapshot = signatureSnapshotFactory(context);
 
     setCurrentSignatureSnapshot(signatureSnapshot);
-  };
+  }, []);
 
   const handleChange = useCallback(
     (context: CanvasRenderingContext2D) => {
@@ -49,7 +57,11 @@ export const Signature: FunctionComponent = () => {
   );
 
   const handleUndoRedo = (snapshot: SignatureSnapshot) => {
-    context?.putImageData(snapshot.value, 0, 0);
+    if (!context) {
+      return;
+    }
+
+    context.putImageData(snapshot.value, 0, 0);
 
     setCurrentSignatureSnapshot(snapshot);
   };
@@ -61,7 +73,9 @@ export const Signature: FunctionComponent = () => {
 
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-    handleReset(context);
+    const signatureSnapshot = signatureSnapshotFactory(context);
+
+    setCurrentSignatureSnapshot(signatureSnapshot);
   };
 
   return (

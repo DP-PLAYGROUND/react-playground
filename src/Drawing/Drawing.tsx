@@ -2,9 +2,11 @@ import { FunctionComponent } from "react";
 import { Signature } from "./Signature/Signature";
 
 const Drawing: FunctionComponent = () => {
-  return (
-    <Signature/>
-  );
+  const handleSignatureChange = (data: ImageData) => {
+    console.log(data);
+  };
+
+  return <Signature onChange={handleSignatureChange} />;
 };
 
 export default Drawing;
