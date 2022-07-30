@@ -1,9 +1,9 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { FunctionComponent } from "react";
+import { emailValidator } from "../app/validators/emailValidator";
 import styles from "./UserForm.module.scss";
-import { emailValidator } from "./validator/emailValidator";
-import { nameValidator } from "./validator/nameValidator";
-import { passwordValidator } from "./validator/passwordValidator";
+import { nameValidator } from "./validators/nameValidator";
+import { passwordValidator } from "./validators/passwordValidator";
 
 const UserForm: FunctionComponent = () => {
   return (

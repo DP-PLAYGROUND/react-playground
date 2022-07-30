@@ -1,1 +1,0 @@
-export const requiredValidator = (value: unknown) => (value ? "" : "Required");
