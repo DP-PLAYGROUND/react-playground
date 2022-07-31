@@ -48,6 +48,7 @@ const UserForm: FunctionComponent = () => {
           {(message) => <span className={styles.error}>{message}</span>}
         </ErrorMessage>
 
+        <label>Signature</label>
         <Field
           name="signature"
           component={Signature}
