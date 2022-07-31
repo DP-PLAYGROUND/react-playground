@@ -1,72 +1,105 @@
-import {ChangeEventHandler, FunctionComponent} from 'react';
-import styles from './TodosFilter.module.scss';
-import {isTodosFilterSortType, todosFilterSortTypes} from './params/TodosFilterSortType';
-import {isTodosFilterStatusType, todosFilterStatusTypes} from './params/TodosFilterStatusType';
-import {useAppDispatch, useAppSelector} from '../../store/hooks';
-import {selectTodosFilterParams, todosFilterActions} from './todosFilterSlice';
+import { ChangeEventHandler, FunctionComponent } from "react";
+import styles from "./TodosFilter.module.scss";
+import {
+  isTodosFilterSortType,
+  todosFilterSortTypes,
+} from "./params/TodosFilterSortType";
+import {
+  isTodosFilterStatusType,
+  todosFilterStatusTypes,
+} from "./params/TodosFilterStatusType";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  selectTodosFilterParams,
+  todosFilterActions,
+} from "./todosFilterSlice";
+import Button from "@mui/material/Button";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextField,
+} from "@mui/material";
 
 export const TodosFilter: FunctionComponent = () => {
-    const appDispatcher = useAppDispatch();
+  const appDispatcher = useAppDispatch();
 
-    const filterParams = useAppSelector(selectTodosFilterParams);
+  const filterParams = useAppSelector(selectTodosFilterParams);
 
-    const handleSortChange: ChangeEventHandler<HTMLSelectElement> = event => {
-        const sort = event.target.value;
+  const handleSortChange = (event: SelectChangeEvent) => {
+    const sort = event.target.value;
 
-        if (!isTodosFilterSortType(sort)) {
-            return;
-        }
-
-        appDispatcher(todosFilterActions.update({sort}));
+    if (!isTodosFilterSortType(sort)) {
+      return;
     }
 
-    const handleStatusChange: ChangeEventHandler<HTMLSelectElement> = event => {
-        const status = event.target.value;
+    appDispatcher(todosFilterActions.update({ sort }));
+  };
 
-        if (!isTodosFilterStatusType(status)) {
-            return;
-        }
+  const handleStatusChange = (event: SelectChangeEvent) => {
+    const status = event.target.value;
 
-        appDispatcher(todosFilterActions.update({status}))
+    if (!isTodosFilterStatusType(status)) {
+      return;
     }
 
-    return (
-        <section className={styles.filter}>
-            <div className={styles.item}>
-                <label htmlFor="search">Search</label>
-                <input type="search"
-                       id={'search'}
-                       value={filterParams.query}
-                       onChange={event => appDispatcher(todosFilterActions.update({ query: event.target.value}))}/>
-            </div>
+    appDispatcher(todosFilterActions.update({ status }));
+  };
 
-            <div className={styles.item}>
-                <label htmlFor="status">Status</label>
-                <select id={'status'}
-                        value={filterParams.status}
-                        onChange={handleStatusChange}>
-                    {todosFilterStatusTypes.map(status => (
-                        <option key={status}
-                                value={status}>{status}</option>
-                    ))}
-                </select>
-            </div>
+  return (
+    <section className={styles.filter}>
+      <FormControl>
+        <TextField
+          type="search"
+          label="Search"
+          value={filterParams.query}
+          onChange={(event) =>
+            appDispatcher(
+              todosFilterActions.update({ query: event.target.value })
+            )
+          }
+        />
+      </FormControl>
 
-            <div className={styles.item}>
-                <label htmlFor="sort">Sort by</label>
-                <select id={'sort'}
-                        value={filterParams.sort}
-                        onChange={handleSortChange}>
-                    {todosFilterSortTypes.map(sort => (
-                        <option key={sort}
-                                value={sort}>{sort}</option>
-                    ))}
-                </select>
-            </div>
+      <FormControl>
+        <InputLabel id="status">Status</InputLabel>
+        <Select
+          labelId="status"
+          label="Status"
+          value={filterParams.status}
+          onChange={handleStatusChange}
+        >
+          {todosFilterStatusTypes.map((status) => (
+            <MenuItem key={status} value={status}>
+              {status}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
-            <div className={styles.item}>
-                <button onClick={() => appDispatcher(todosFilterActions.reset())}>Reset</button>
-            </div>
-        </section>
-    )
-}
+      <FormControl>
+        <InputLabel id="sort">Sort</InputLabel>
+        <Select
+          labelId="sort"
+          label="Sort"
+          value={filterParams.sort}
+          onChange={handleSortChange}
+        >
+          {todosFilterSortTypes.map((sort) => (
+            <MenuItem key={sort} value={sort}>
+              {sort}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <div className={styles.item}>
+        <Button onClick={() => appDispatcher(todosFilterActions.reset())}>
+          Reset
+        </Button>
+      </div>
+    </section>
+  );
+};
