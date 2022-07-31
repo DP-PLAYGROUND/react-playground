@@ -1,9 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { FunctionComponent } from "react";
 import { emailValidator } from "../app/validators/emailValidator";
+import { Signature } from "./Signature/Signature";
 import styles from "./UserForm.module.scss";
 import { nameValidator } from "./validators/nameValidator";
 import { passwordValidator } from "./validators/passwordValidator";
+import { signatureValidator } from "./validators/signatureValidator";
 
 const UserForm: FunctionComponent = () => {
   return (
@@ -34,6 +36,12 @@ const UserForm: FunctionComponent = () => {
           type="password"
           placeholder="Password"
           validate={passwordValidator}
+        ></Field>
+        <ErrorMessage name="password" />
+        <Field
+          name="signature"
+          component={Signature}
+          validate={signatureValidator}
         ></Field>
         <ErrorMessage name="password" />
 

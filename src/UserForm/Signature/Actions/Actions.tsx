@@ -39,13 +39,13 @@ export const Actions: FunctionComponent<ActionsProps> = ({
 
   return (
     <>
-      <button disabled={!snapshot.previous} onClick={handleUndo}>
+      <button disabled={!snapshot.previous} onClick={handleUndo} type="button">
         Undo
       </button>
-      <button disabled={!snapshot.next} onClick={handleRedo}>
+      <button disabled={!snapshot.next} onClick={handleRedo} type="button">
         Redo
       </button>
-      <button disabled={!snapshot.previous} onClick={onClear}>
+      <button disabled={!snapshot.previous} onClick={onClear} type="button">
         Clear
       </button>
     </>

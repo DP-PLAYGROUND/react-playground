@@ -5,34 +5,28 @@ import styles from "./Signature.module.scss";
 import { SignatureSnapshot } from "./SignatureSnapshot";
 import { Actions } from "./Actions/Actions";
 import { useEffect } from "react";
-
-const signatureSnapshotFactory = (context: CanvasRenderingContext2D) => {
-  const imageData = context.getImageData(
-    0,
-    0,
-    context.canvas.width,
-    context.canvas.height
-  );
-
-  return new SignatureSnapshot(imageData);
-};
+import { FieldProps } from "formik";
+import { signatureSnapshotFactory } from "./signatureSnapshotFactory";
 
 export interface SignatureProps {
   readonly onChange?: (data: ImageData) => void;
 }
-
-export const Signature: FunctionComponent<SignatureProps> = ({ onChange }) => {
+export const Signature: FunctionComponent<FieldProps<ImageData>> = ({
+  field: { name },
+  form: { setFieldValue },
+}) => {
   const [context, setContext] = useState<CanvasRenderingContext2D>();
 
   const [currentSignatureSnapshot, setCurrentSignatureSnapshot] =
     useState<SignatureSnapshot | null>(null);
 
   useEffect(() => {
-    return (
-      currentSignatureSnapshot?.value &&
-      onChange?.(currentSignatureSnapshot.value)
-    );
-  }, [onChange, currentSignatureSnapshot]);
+    if (!currentSignatureSnapshot?.value) {
+      return;
+    }
+
+    setFieldValue(name, currentSignatureSnapshot.value);
+  }, [setFieldValue, name, currentSignatureSnapshot]);
 
   const handleInit = useCallback((context: CanvasRenderingContext2D) => {
     setContext(context);
