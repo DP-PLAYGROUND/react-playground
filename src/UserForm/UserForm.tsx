@@ -11,7 +11,7 @@ const initialValues = {
   name: "",
   email: "",
   password: "",
-  signature: undefined
+  signature: new ImageData(1, 1)
 };
 
 const UserForm: FunctionComponent = () => {

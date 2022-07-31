@@ -75,7 +75,7 @@ export const Signature: FunctionComponent<FieldProps<ImageData>> = ({
   return (
     <div className={styles.signature}>
       <div className={styles.canvas}>
-        <Canvas onInit={handleInit}>
+        <Canvas onInit={handleInit} width={350} height={200}>
           <CanvasPencil onChange={handleChange} />
         </Canvas>
       </div>
