@@ -1,24 +1,20 @@
-import { FunctionComponent, useCallback, useState } from "react";
-import { Canvas } from "../../components/Canvas/Canvas";
-import { CanvasPencil } from "../../components/Canvas/Tools/CanvasPencil";
+import {FunctionComponent, useCallback, useEffect, useState} from "react";
+import {Canvas} from "../../components/Canvas/Canvas";
+import {CanvasPencil} from "../../components/Canvas/Tools/CanvasPencil";
 import styles from "./Signature.module.scss";
-import { SignatureSnapshot } from "./SignatureSnapshot";
-import { Actions } from "./Actions/Actions";
-import { useEffect } from "react";
-import { FieldProps } from "formik";
-import { signatureSnapshotFactory } from "./signatureSnapshotFactory";
+import {SignatureSnapshot} from "./SignatureSnapshot";
+import {Actions} from "./Actions/Actions";
+import {FieldProps} from "formik";
+import {signatureSnapshotFactory} from "./signatureSnapshotFactory";
 
-export interface SignatureProps {
-  readonly onChange?: (data: ImageData) => void;
-}
 export const Signature: FunctionComponent<FieldProps<ImageData>> = ({
-  field: { name },
-  form: { setFieldValue },
-}) => {
+                                                                      field: { name },
+                                                                      form: { setFieldValue },
+                                                                    }) => {
   const [context, setContext] = useState<CanvasRenderingContext2D>();
 
   const [currentSignatureSnapshot, setCurrentSignatureSnapshot] =
-    useState<SignatureSnapshot | null>(null);
+      useState<SignatureSnapshot | null>(null);
 
   useEffect(() => {
     if (!currentSignatureSnapshot?.value) {
@@ -37,17 +33,17 @@ export const Signature: FunctionComponent<FieldProps<ImageData>> = ({
   }, []);
 
   const handleChange = useCallback(
-    (context: CanvasRenderingContext2D) => {
-      const signatureSnapshot = signatureSnapshotFactory(context);
+      (context: CanvasRenderingContext2D) => {
+        const signatureSnapshot = signatureSnapshotFactory(context);
 
-      if (currentSignatureSnapshot) {
-        currentSignatureSnapshot.next = signatureSnapshot;
-        signatureSnapshot.previous = currentSignatureSnapshot;
-      }
+        if (currentSignatureSnapshot) {
+          currentSignatureSnapshot.next = signatureSnapshot;
+          signatureSnapshot.previous = currentSignatureSnapshot;
+        }
 
-      setCurrentSignatureSnapshot(signatureSnapshot);
-    },
-    [currentSignatureSnapshot]
+        setCurrentSignatureSnapshot(signatureSnapshot);
+      },
+      [currentSignatureSnapshot]
   );
 
   const handleUndoRedo = (snapshot: SignatureSnapshot) => {
@@ -73,21 +69,21 @@ export const Signature: FunctionComponent<FieldProps<ImageData>> = ({
   };
 
   return (
-    <div className={styles.signature}>
-      <div className={styles.canvas}>
-        <Canvas onInit={handleInit} width={350} height={200}>
-          <CanvasPencil onChange={handleChange} />
-        </Canvas>
+      <div className={styles.signature}>
+        <div className={styles.canvas}>
+          <Canvas onInit={handleInit} width={350} height={200}>
+            <CanvasPencil onChange={handleChange} />
+          </Canvas>
+        </div>
+        <div>
+          {currentSignatureSnapshot && (
+              <Actions
+                  snapshot={currentSignatureSnapshot}
+                  onUndoRedo={handleUndoRedo}
+                  onClear={handleClear}
+              />
+          )}
+        </div>
       </div>
-      <div>
-        {currentSignatureSnapshot && (
-          <Actions
-            snapshot={currentSignatureSnapshot}
-            onUndoRedo={handleUndoRedo}
-            onClear={handleClear}
-          />
-        )}
-      </div>
-    </div>
   );
 };
