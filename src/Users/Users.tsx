@@ -14,7 +14,7 @@ const Users: FunctionComponent = () => {
 
     const total = useAppSelector(selectTotalUsers);
 
-    const [loaderTriggerElement, loaderTriggerRef] = useElement();
+    const {element: loaderTriggerElement, ref: loaderTriggerRef} = useElement();
 
     const intersectionObserver = useMemo(() => new IntersectionObserver(
             entries => entries.some(({isIntersecting}) =>

@@ -5,5 +5,5 @@ export const useElement = <T extends Element>() => {
 
     const ref = useCallback((element: T | null) => setElement(element), []);
 
-    return [element, ref];
+    return {element, ref};
 }
